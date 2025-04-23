@@ -12,7 +12,7 @@ public class Main {
     /**
      * Calls on the constructors for view and controller
      * 
-     * @param args The application does not take any comand line parameters
+     * @param args The application does not take any command line parameters
      */
     public static void main(String[] args) {
 

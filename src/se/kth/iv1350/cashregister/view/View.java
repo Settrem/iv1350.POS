@@ -3,7 +3,7 @@ package se.kth.iv1350.cashregister.view;
 import se.kth.iv1350.cashregister.controller.Controller;
 
 /**
- * Represents the User Interface of the Cash register
+ * Represents the User Interface of the cash register
  */
 public class View {
    
@@ -12,7 +12,7 @@ public class View {
     /**
      * Constructor that connects the system to the user interface
      * 
-     * @param controller is used to give the view konroller over the current system
+     * @param controller Is used to give the view access to the controller over the current system
      */
     public View(Controller controller) {
         

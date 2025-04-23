@@ -14,7 +14,7 @@ public class RegHandler {
     private CustomerRegistry customerRegistry;
 
     /**
-     * Initializes all registrys
+     * Initializes all registries
      */
     public RegHandler() {
 

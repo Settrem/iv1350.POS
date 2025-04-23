@@ -6,7 +6,7 @@ public class Sale {
     private ItemCart itemcart;
     
     /**
-     * Creates a new item Cart that will be used in the current sale
+     * Creates a new item cart that will be used in the current sale
      */
     public Sale(){
 

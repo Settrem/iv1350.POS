@@ -12,7 +12,7 @@ public class Controller {
     private RegHandler regHandler;
 
     /**
-     * Initializes the entire model of the system that the Controlls the entire sale
+     * Initializes the entire model of the system that controls the entire sale
      */
     public Controller () {
         
@@ -24,7 +24,7 @@ public class Controller {
     /**
      * Creates a new sale
      * 
-     * @return tells if method was successfull (1) or unsuccesfull (0) 
+     * @return Tells if method was successful (1) or unsuccesful (0) 
      */
     public int startSale() {
 
