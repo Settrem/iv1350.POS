@@ -25,6 +25,11 @@ public final class ItemDTO {
         this.vat = vat;
     }
 
+    @Override
+    public String toString() {
+        return itemID + " - " + description + " - " + price + " - " + vat;
+    }
+
     public String getName() {
         return name;
     }

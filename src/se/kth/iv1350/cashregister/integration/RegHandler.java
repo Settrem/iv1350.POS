@@ -14,6 +14,7 @@ public class RegHandler {
     private ItemRegistry itemRegistry;
     private DiscountRegistry discountRegistry;
     private CustomerRegistry customerRegistry;
+    private ItemRegistryAdarTest itemRegistryAdarTest;
 
     /**
      * Initializes all registries
@@ -24,6 +25,7 @@ public class RegHandler {
         this.itemRegistry = new ItemRegistry();
         this.customerRegistry = new CustomerRegistry();
         this.accountingRegistry = new AccountingRegistry();
+        this.itemRegistryAdarTest = new ItemRegistryAdarTest("src/lib/svensk_matmeny.csv");
     }
 
     /**

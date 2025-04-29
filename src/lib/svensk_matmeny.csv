@@ -1,0 +1,11 @@
+itemID,name,description,price,vat
+1,Köttbullar,Traditionella svenska köttbullar med potatismos,89.0,12
+2,Gravad lax,Lax inlagd med dill och senapssås,105.0,12
+3,Räksmörgås,Smörgås toppad med handskalade räkor,119.0,12
+4,Pytti panna,"Stekt potatis, kött och lök med stekt ägg",79.0,12
+5,Prinsesstårta,Svensk klassisk tårta med marsipan,49.0,12
+6,Falukorv med stuvade makaroner,Klassisk husmanskost,69.0,12
+7,Smörgåstårta,Lager av bröd med fyllningar av skinka och ost,139.0,12
+8,Västerbottenpaj,Ostpaj med Västerbottenost,59.0,12
+9,Lingonsylt,Burk med hemlagad lingonsylt,35.0,12
+10,Ärtsoppa och pannkakor,Torsdagsklassiker med senap och sylt,99.0,12
