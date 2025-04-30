@@ -36,11 +36,11 @@ public class Controller {
      * @param itemID is the idetification used to search for a specific item
      * @return Will return a Item Data transfer objekt
      */
-    public ItemDTO enterItem(int itemID){
+    public void enterItem(int itemID){
         
         ItemDTO itemDTO = this.regHandler.getItem(itemID);
-
-        return itemDTO;
+        currentSale.addItem(itemDTO);
+        
     }
 
 
