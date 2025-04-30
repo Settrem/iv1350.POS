@@ -15,7 +15,7 @@ public class ItemCart {
      */
     private int searchItem(ItemDTO itemDTO){
         for(int i=0; i<cart.size(); i++){
-            if(cart.get(i).itemDTO == itemDTO){
+            if(cart.get(i).itemDTO.getItemID() == itemDTO.getItemID()){
                 return i;
             }
         }
