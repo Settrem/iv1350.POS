@@ -1,4 +1,5 @@
 package se.kth.iv1350.cashregister.model;
+import se.kth.iv1350.cashregister.DTOs.ItemDTO;
 import se.kth.iv1350.cashregister.model.ItemCart;
 
 public class Sale {
@@ -11,6 +12,12 @@ public class Sale {
     public Sale(){
 
         this.itemcart = new ItemCart();
+
+    }
+
+    public void addItem(ItemDTO item) {
+        
+
 
     }
 
