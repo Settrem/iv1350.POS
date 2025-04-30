@@ -56,4 +56,8 @@ public class ItemCart {
         }
         return "Item was not found";
     }
+
+    public ArrayList<CartItemDTO> getCart() {
+        return this.cart;
+    }
 }

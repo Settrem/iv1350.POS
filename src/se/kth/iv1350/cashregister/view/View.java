@@ -1,6 +1,10 @@
 package se.kth.iv1350.cashregister.view;
 
 import se.kth.iv1350.cashregister.controller.Controller;
+
+import java.util.ArrayList;
+
+import se.kth.iv1350.cashregister.DTOs.CartItemDTO;
 import se.kth.iv1350.cashregister.DTOs.ItemDTO;
 //import se.kth.iv1350.cashregister.model.CartEntry;
 
@@ -20,25 +24,25 @@ public class View {
      */
     public View(Controller controller) {
         
-        this.controller = controller;
+        this.controller = new Controller();
 
     }
 
     public void test() {
-        addItem(5); //item that does not exist, should print "Item not found!"
+        addItem(16); //item that does not exist, should print "Item not found!"
         displayCart(); //cart has not been created yet, should print "Scan item to start sale"
-        addItem(123); //item that exists, should print "Milk was added to cart"
+        addItem(1); //item that exists, should print "Köttbullar was added to cart"
         displayCart(); //previous item was successfully scanned and cart has been created, should print relevant details.
-        addItem(123); //should print identical to two rows above
-        displayCart(); //There should now be two instances of milk
-        addItem(456); //sould print "Coke Zero has been added"
-        displayCart(); //Should display two instances of milk and one of coke zero
+        addItem(1); //should print identical to two rows above
+        displayCart(); //There should now be two instances of köttbullar
+        addItem(2); //sould print "Gravad lax has been added"
+        displayCart(); //Should display two instances of köttbullar and one of gravad lax
 
         
     }
 
     private void addItem(int itemID) {
-        this.newestItem = this.controller.enterItem(0);
+        this.newestItem = this.controller.enterItem(itemID);
         if (this.newestItem == null) {
             System.out.println("Item not found!");
         }
@@ -48,23 +52,26 @@ public class View {
     }
 
     private void displayCart() {
-        /*
+        
         int totalPrice = 0;
-        CartEntry[] itemCart = this.controller.getCart();
-        if (itemCart == null) {
+        if (controller.getSale() == null) {
             System.out.println("Scan item to start sale");
             return;
         }
         else {
+            ArrayList<CartItemDTO> itemCart = this.controller.getCart();
             System.out.println("Cart: \n -----------");
-            for(int i = 0; i < itemCart.length; i++) {
-                item = cartEntry.item;
-                totalPrice += item.price * cartEntry.amount;
-                System.out.println(item.name + "  x" + cartEntry.amount + "  " + (cartEntry.amount * item.price) "kr");
+            for(int i = 0; i < itemCart.size(); i++) {
+                CartItemDTO item = itemCart.get(i);
+                String name = item.itemDTO.getName();
+                int amount = item.getAmount();
+                double price = item.itemDTO.getPrice();
+                totalPrice += item.itemDTO.getPrice() * item.getAmount();
+                System.out.println(name + "  x" + amount + "  " + (amount * price) + "kr");
             }
-            System.out.println("\n" + totalPrice + "kr")
+            System.out.println("\n" + totalPrice + "kr");
         }
-        */
+        
         return;
     }
 

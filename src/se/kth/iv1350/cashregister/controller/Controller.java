@@ -1,6 +1,10 @@
 package se.kth.iv1350.cashregister.controller;
 
 import se.kth.iv1350.cashregister.integration.RegHandler;
+
+import java.util.ArrayList;
+
+import se.kth.iv1350.cashregister.DTOs.CartItemDTO;
 import se.kth.iv1350.cashregister.DTOs.ItemDTO;
 import se.kth.iv1350.cashregister.integration.Printer;
 import se.kth.iv1350.cashregister.model.Sale;
@@ -36,11 +40,28 @@ public class Controller {
      * @param itemID is the idetification used to search for a specific item
      * @return Will return a Item Data transfer objekt
      */
-    public void enterItem(int itemID){
+    public ItemDTO enterItem(int itemID){
         
         ItemDTO itemDTO = this.regHandler.getItem(itemID);
-        currentSale.addItem(itemDTO);
+        if (itemDTO == null) {
+            return itemDTO; //returns null to view if failed
+        }
+
+        if (this.currentSale == null) {
+            this.startSale();
+        }
         
+        currentSale.addItem(itemDTO);
+        return itemDTO;
+        
+    }
+
+    public Sale getSale() {
+        return currentSale;
+    }
+
+    public ArrayList<CartItemDTO> getCart() {
+        return this.currentSale.itemCart.getCart();
     }
 
 
