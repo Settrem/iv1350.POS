@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class ItemCart {
     
-    ArrayList<CartItemDTO> cart = new ArrayList<CartItemDTO>();
+    public ArrayList<CartItemDTO> cart = new ArrayList<CartItemDTO>();
     
     /**
      * Searches for item inside the itemCart 

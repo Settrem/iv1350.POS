@@ -7,7 +7,7 @@ import se.kth.iv1350.cashregister.model.ItemCart;
 
 public class Sale {
 
-    private ItemCart itemCart;
+    public ItemCart itemCart;
     private int totalPrice;
     
     /**

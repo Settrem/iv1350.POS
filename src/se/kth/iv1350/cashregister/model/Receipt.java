@@ -1,6 +1,7 @@
 package se.kth.iv1350.cashregister.model;
-//import se.kth.iv1350.cashregister.model.cartEntry;
+import se.kth.iv1350.cashregister.DTOs.CartItemDTO;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Receipt {
     String receipt;
@@ -9,20 +10,20 @@ public class Receipt {
         int width = 49;
         int total = 0;
         this.receipt = "";
-        this.receipt.concat(repeat((width - 15)/2));
+        this.receipt.concat("-".repeat((width - 15)/2));
         this.receipt.concat("Begin receipt");
         this.receipt.concat("-".repeat((width - 15)/2));
         this.receipt.concat("Time of sale: ");
         this.receipt.concat(LocalDateTime.now().toString() + "\n\n");
-        cartEntry[] cart = sale.itemcart.getList();
-        for(int i = 0; i < cart.length; i++) {
-            cartEntry currentEntry = cart[i];
-            String currentLine = currentEntry.item.name;
+        ArrayList<CartItemDTO> cart = sale.itemCart.cart;
+        for(int i = 0; i < cart.size(); i++) {
+            CartItemDTO currentEntry = cart.get(i);
+            String currentLine = currentEntry.itemDTO.getName();
             currentLine.concat(" ".repeat(30 - currentLine.length()));
-            currentLine.concat(currentEntry.amount + " x " + currentEntry.item.price);
+            currentLine.concat(currentEntry.getAmount() + " x " + currentEntry.itemDTO.getPrice());
             currentLine.concat(" ".repeat(40 - currentLine.length()));
-            currentLine.concat((currentEntry.amount * currentEntry.item.price) + " SEK\n");
-            total += currentEntry.amount * currentEntry.item.price;
+            currentLine.concat((currentEntry.getAmount() * currentEntry.itemDTO.getPrice()) + " SEK\n");
+            total += currentEntry.getAmount() * currentEntry.itemDTO.getPrice();
             this.receipt.concat(currentLine);
         }
         this.receipt.concat("\n" + " ".repeat(40) + total + " SEK\n");
