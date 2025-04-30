@@ -60,9 +60,21 @@ public class Controller {
         return currentSale;
     }
 
+    public String endSale(double cash) {
+        String receipt = currentSale.getReceipt(cash);
+        if (regHandler.accountSale(this.getSale()) != 0) {//Breaks gdpr maybe
+            return("Error occured while accounting sale!");
+        } 
+        currentSale = null;
+        return receipt;
+    }
+
     public ArrayList<CartItemDTO> getCart() {
         return this.currentSale.itemCart.getCart();
     }
 
+    public String printReceipt(double cash) {
+        return currentSale.getReceipt(cash);
+    }
 
 }

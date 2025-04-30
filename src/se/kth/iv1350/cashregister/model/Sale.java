@@ -56,7 +56,12 @@ public class Sale {
         int amount = itemCart.getAmount();
         
         this.totalPrice += amount * price * (1 + vat / 100.0);
+        }
     }
-}
+    
+    public String getReceipt(double cash) {
+        Receipt receipt = new Receipt(this, cash);
+        return receipt.printReceipt();
+    }
 
 }

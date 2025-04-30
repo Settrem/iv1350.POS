@@ -3,6 +3,7 @@ package se.kth.iv1350.cashregister.integration;
 import se.kth.iv1350.cashregister.DTOs.ItemDTO;
 import se.kth.iv1350.cashregister.integration.*;
 import se.kth.iv1350.cashregister.DTOs.*;
+import se.kth.iv1350.cashregister.model.Sale;
 
 /**
  * Handles all outside actors
@@ -34,6 +35,13 @@ public class RegHandler {
         ItemDTO itemDTO = itemRegistry.getItemById(itemID);
 
         return itemDTO;
+    }
+
+    public int accountSale(Sale sale){
+        if (accountingRegistry.accountSale(sale) != 0) {
+            return -1;
+        }
+        return 0;
     }
     
 

@@ -35,9 +35,9 @@ public class View {
         displayCart(); //previous item was successfully scanned and cart has been created, should print relevant details.
         addItem(1); //should print identical to two rows above
         displayCart(); //There should now be two instances of köttbullar
-        addItem(2); //sould print "Gravad lax has been added"
+        addItem(4); //sould print "Gravad lax has been added"
         displayCart(); //Should display two instances of köttbullar and one of gravad lax
-
+        System.out.println(endSale(500));
         
     }
 
@@ -75,18 +75,8 @@ public class View {
         return;
     }
 
-    /* remove comment markers when relevant methods are added
-    private int endSale(int paymentAmount) { // change to PaymentAmount class when added, or remain int/double if omitted
-        int totalPrice = controller.getTotal();
-        int result = controller.acceptPayment(paymentAmount);
-        if (result == -1) {
-            System.out.println("Customer is broke! ha ha") //Too little cash in payment
-        }
-        else {
-            accountingRegistry.addSale(controller.sale()); //Breaks gdpr maybe, move to controller later
-            println("Payment successful! Change: " totalPrice - paymentAmount "kr")
-        }
+    private String endSale(double paymentAmount) { // change to PaymentAmount class when added, or remain int/double if omitted
+        return controller.endSale(paymentAmount);
     }
-    */
 }
 
