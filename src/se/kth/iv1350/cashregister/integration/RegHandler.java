@@ -14,7 +14,6 @@ public class RegHandler {
     private ItemRegistry itemRegistry;
     private DiscountRegistry discountRegistry;
     private CustomerRegistry customerRegistry;
-    private ItemRegistryAdarTest itemRegistryAdarTest;
 
     /**
      * Initializes all registries
@@ -22,10 +21,9 @@ public class RegHandler {
     public RegHandler() {
         this.customerRegistry = new CustomerRegistry();
         this.discountRegistry = new DiscountRegistry();
-        this.itemRegistry = new ItemRegistry();
+        this.itemRegistry = new ItemRegistry("src/lib/svensk_matmeny.csv");
         this.customerRegistry = new CustomerRegistry();
         this.accountingRegistry = new AccountingRegistry();
-        this.itemRegistryAdarTest = new ItemRegistryAdarTest("src/lib/svensk_matmeny.csv");
     }
 
     /**
@@ -33,7 +31,7 @@ public class RegHandler {
      */
     public ItemDTO getItem(int itemID){
 
-        ItemDTO itemDTO = itemRegistry.getItem(itemID);
+        ItemDTO itemDTO = itemRegistry.getItemById(itemID);
 
         return itemDTO;
     }
