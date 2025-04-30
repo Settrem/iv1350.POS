@@ -1,8 +1,5 @@
 package se.kth.iv1350.cashregister.DTOs;
 
-/**
- * Contains information about an item
- */
 
 public final class ItemDTO {
     private int itemID;
@@ -11,12 +8,22 @@ public final class ItemDTO {
     private double price;
     private double vat;
 
+    /**
+     * Gets the itemID
+     * @return itemID as int
+     */
     public int getItemID() {
         return itemID;
     }
-/**
- * Constructor for the ItemDTO class
- */
+
+    /**
+     * Creates a itemDTO when given all these parameters
+     * @param itemID
+     * @param name
+     * @param description
+     * @param price
+     * @param vat
+     */
     public ItemDTO(int itemID, String name, String description, double price, double vat) {
         this.itemID = itemID;
         this.name = name;
