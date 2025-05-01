@@ -29,6 +29,7 @@ public class View {
     }
 
     public void test() {
+        displayCart(); //cart has not been created yet, should print "Scan item to start sale"
         addItem(16); //item that does not exist, should print "Item not found!"
         displayCart(); //cart has not been created yet, should print "Scan item to start sale"
         addItem(1); //item that exists, should print "Köttbullar was added to cart"
@@ -67,9 +68,9 @@ public class View {
                 int amount = item.getAmount();
                 double price = item.itemDTO.getPrice();
                 totalPrice += item.itemDTO.getPrice() * item.getAmount();
-                System.out.println(name + "  x" + amount + "  " + (amount * price) + "kr");
+                System.out.println(name + "  x" + amount + "  " + (amount * price / 100.0) + "kr");
             }
-            System.out.println("\n" + totalPrice + "kr");
+            System.out.println("\n" + totalPrice/100.0 + "kr");
         }
         
         return;
