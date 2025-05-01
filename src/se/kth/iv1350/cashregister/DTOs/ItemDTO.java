@@ -43,8 +43,8 @@ public final class ItemDTO {
     public String getDescription() {
         return description;
     }
-    public double getPrice() {
-        return price;
+    public int getPrice() {
+        return (int)(price * (1 + vat/100));
     }
     public double getVAT() {
         return vat;

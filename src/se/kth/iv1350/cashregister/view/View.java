@@ -37,7 +37,7 @@ public class View {
         displayCart(); //There should now be two instances of köttbullar
         addItem(4); //sould print "Gravad lax has been added"
         displayCart(); //Should display two instances of köttbullar and one of gravad lax
-        System.out.println(endSale(500));
+        System.out.println(endSale(50000));
         
     }
 
@@ -75,7 +75,7 @@ public class View {
         return;
     }
 
-    private String endSale(double paymentAmount) { // change to PaymentAmount class when added, or remain int/double if omitted
+    private String endSale(int paymentAmount) { // change to PaymentAmount class when added, or remain int/double if omitted
         return controller.endSale(paymentAmount);
     }
 }

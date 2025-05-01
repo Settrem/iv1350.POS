@@ -60,7 +60,7 @@ public class Controller {
         return currentSale;
     }
 
-    public String endSale(double cash) {
+    public String endSale(int cash) {
         String receipt = currentSale.getReceipt(cash);
         if (regHandler.accountSale(this.getSale()) != 0) {//Breaks gdpr maybe
             return("Error occured while accounting sale!");
@@ -73,7 +73,7 @@ public class Controller {
         return this.currentSale.itemCart.getCart();
     }
 
-    public String printReceipt(double cash) {
+    public String printReceipt(int cash) {
         return currentSale.getReceipt(cash);
     }
 

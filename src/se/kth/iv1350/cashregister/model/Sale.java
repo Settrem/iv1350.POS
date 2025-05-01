@@ -8,7 +8,6 @@ import se.kth.iv1350.cashregister.model.ItemCart;
 public class Sale {
 
     public ItemCart itemCart;
-    private int totalPrice;
     
     /**
      * Creates a new item cart that will be used in the current sale
@@ -32,7 +31,7 @@ public class Sale {
      * @param totalPrice The totalprice for the items
      */
     public double acceptPayment(double payedAmount) {
-        if (payedAmount >= this.totalPrice) {
+        if (payedAmount >= this.getTotal()) {
             return getChange(payedAmount); 
         } else {
             System.out.println("Payment Failed");
@@ -41,25 +40,42 @@ public class Sale {
     }
 
     private double getChange(double payedAmount){
-        return payedAmount - this.totalPrice;
+        return payedAmount - this.getTotal();
     }
 
     /**
      * Takes the items registered in cart and calculates running total
      * @param itemcart Imports all items scanned 
      */
-    private void getPrice(ArrayList<CartItemDTO> cart) {
-
-    for (CartItemDTO itemCart : cart) {
-        double price = itemCart.itemDTO.getPrice();
-        double vat = itemCart.itemDTO.getVAT();
-        int amount = itemCart.getAmount();
-        
-        this.totalPrice += amount * price * (1 + vat / 100.0);
+    public int getTotal() {
+        int totalPrice = 0;
+        ArrayList<CartItemDTO> cart = this.itemCart.getCart();
+        for (int i = 0; i < cart.size(); i++) {
+            ItemDTO item = cart.get(i).itemDTO;
+            double price = item.getPrice();
+            double vat = item.getVAT();
+            int amount = cart.get(i).getAmount();
+            
+            totalPrice += amount * price;
         }
+        return totalPrice;
+    }
+
+    public int getVat() {
+        int totalVat = 0;
+        ArrayList<CartItemDTO> cart = this.itemCart.getCart();
+        for (int i = 0; i < cart.size(); i++) {
+            ItemDTO item = cart.get(i).itemDTO;
+            double price = item.getPrice();
+            double vat = item.getVAT();
+            int amount = cart.get(i).getAmount();
+            
+            totalVat += amount * price * (vat / 100.0);
+        }
+        return totalVat;
     }
     
-    public String getReceipt(double cash) {
+    public String getReceipt(int cash) {
         Receipt receipt = new Receipt(this, cash);
         return receipt.printReceipt();
     }

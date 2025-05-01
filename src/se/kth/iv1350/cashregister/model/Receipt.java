@@ -7,10 +7,11 @@ import java.util.ArrayList;
 public class Receipt {
     private String receipt;
 
-    public Receipt(Sale sale, double cash)
+    public Receipt(Sale sale, int cash)
     {
-        int width = 51;
-        double total = 0;
+        int width = 61;
+        int total = sale.getTotal();
+        int vat = sale.getVat();
         this.receipt = "";
         this.receipt = this.receipt.concat("-".repeat((width - 15)/2));
         this.receipt = this.receipt.concat("Begin receipt");
@@ -21,20 +22,23 @@ public class Receipt {
         for(int i = 0; i < cart.size(); i++) {
             CartItemDTO currentEntry = cart.get(i);
             String currentLine = currentEntry.itemDTO.getName();
-            currentLine = currentLine.concat(" ".repeat(28 - currentLine.length()));
-            currentLine = currentLine.concat(currentEntry.getAmount() + " x " + currentEntry.itemDTO.getPrice());
-            currentLine = currentLine.concat(" ".repeat(40 - currentLine.length()));
-            currentLine = currentLine.concat((currentEntry.getAmount() * currentEntry.itemDTO.getPrice()) + " SEK\n");
-            total += currentEntry.getAmount() * currentEntry.itemDTO.getPrice();
+            String priceString = "" + currentEntry.getAmount() * currentEntry.itemDTO.getPrice() / 100.0;
+            currentLine = currentLine.concat(" ".repeat(25 - currentLine.length()));
+            currentLine = currentLine.concat(currentEntry.getAmount() + " x " + currentEntry.itemDTO.getPrice()/100.0);
+            currentLine = currentLine.concat(" ".repeat(width - currentLine.length() - priceString.length() - 6));
+            currentLine = currentLine.concat(priceString + " SEK\n");
+            //total += currentEntry.getAmount() * currentEntry.itemDTO.getPrice();
             this.receipt = this.receipt.concat(currentLine);
         }
-        this.receipt = this.receipt.concat("\nTotal:" + " ".repeat(34) + total + " SEK\n");
-        this.receipt = this.receipt.concat("vat goes here\n\n");
+        String totalString = "" + total/100.0;
+        String vatString = "" + vat/100.0;
+        this.receipt = this.receipt.concat("\nTotal:" + " ".repeat(width - totalString.length() - 12) + totalString + " SEK\n");
+        this.receipt = this.receipt.concat("Vat:" + " ".repeat(width - totalString.length() - 9) + vatString + " SEK\n");
 
-        String cashString = "" + cash;
-        String change = "" + (cash - total);
-        this.receipt = this.receipt.concat("Cash:" + " ".repeat(40 - cashString.length()) + cashString + " SEK\n");
-        this.receipt = this.receipt.concat("Change:" + " ".repeat(38 - change.length()) + change + " SEK\n");
+        String cashString = "" + cash/100.0;
+        String change = "" + (cash - total)/100.0;
+        this.receipt = this.receipt.concat("Cash:" + " ".repeat(width - cashString.length() - 11) + cashString + " SEK\n");
+        this.receipt = this.receipt.concat("Change:" + " ".repeat(width - change.length() - 13) + change + " SEK\n");
 
         this.receipt = this.receipt.concat("-".repeat((width - 13)/2));
         this.receipt = this.receipt.concat("End receipt");

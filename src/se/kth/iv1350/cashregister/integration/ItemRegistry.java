@@ -32,8 +32,8 @@ public class ItemRegistry {
         int itemID = Integer.parseInt(parts[0]);
         String name = parts[1];
         String description = parts[2];
-        double price = Double.parseDouble(parts[3]);
-        double vat = Integer.parseInt(parts[4]);
+        int price = Integer.parseInt(parts[3]);
+        int vat = Integer.parseInt(parts[4]);
 
         return new ItemDTO(itemID, name, description, price, vat);
     }
