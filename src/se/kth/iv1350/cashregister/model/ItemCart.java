@@ -65,8 +65,9 @@ public class ItemCart {
 
         if(itemIndex != -1){
             if(cart.get(itemIndex).getAmount() == 1) {
+                String itemName = cart.get(itemIndex).itemDTO.getName();
                 cart.remove(itemIndex);
-                return "Removed " + cart.get(itemIndex).itemDTO.getName() + " from cart";                
+                return "Removed " + itemName + " from cart";                
             } else {
                 cart.get(itemIndex).decrementItem();
                 return "Removed one " + cart.get(itemIndex).itemDTO.getName() + " from cart";

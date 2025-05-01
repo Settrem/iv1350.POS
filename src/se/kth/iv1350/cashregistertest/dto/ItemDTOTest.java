@@ -1,66 +1,70 @@
 package se.kth.iv1350.cashregistertest.dto;
 
-import org.junit.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import se.kth.iv1350.cashregister.dto.ItemDTO;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 /**
  * Unit tests for the ItemDTO class.
  */
 public class ItemDTOTest {
-
     private ItemDTO item;
 
     @BeforeEach
     public void prepareTest(){
-        this.item = new ItemDTO(1, "Milk", "1 liter of milk", 21.0, 12.0);
+        item = new ItemDTO(1, "Milk", "1 liter of milk", 21.0, 12.0);
     }
 
     @Test
     public void testGetItemID() {
-        Assert.assertEquals(1, this.item.getItemID());
+        assertEquals(1, item.getItemID(), "Item ID should be 1");
     }
 
     @Test
     public void testGetName() {
-        Assert.assertEquals("Milk", this.item.getName());
+        assertEquals("Milk", item.getName(), "Item name should be 'Milk'");
     }
 
     @Test
     public void testGetDescription() {
-        Assert.assertEquals("1 liter of milk", this.item.getDescription());
+        assertEquals("1 liter of milk", item.getDescription(), "Description should be '1 liter of milk'");
     }
 
     @Test
     public void testGetPriceBeforeVAT() {
-        Assert.assertEquals(21.0, this.item.getPriceBeforeVAT());
+        assertEquals(21.0, item.getPriceBeforeVAT(), "Price before VAT should be 21");
     }
 
     @Test
     public void testGetVAT() {
-        Assert.assertEquals(12.0, this.item.getVAT());
+        assertEquals(12.0, item.getVAT(), "VAT should be 12.0%");
     }
 
     @Test
     public void testGetPriceWithVAT() {
         int expectedPriceWithVAT = (int)(21.0 * 1.12);
-        Assert.assertEquals(expectedPriceWithVAT, this.item.getPriceWithVAT());
+        assertEquals(expectedPriceWithVAT, item.getPriceWithVAT(), "Price with VAT should be" + expectedPriceWithVAT);
     }
 
     @Test
     public void testGetVATByPrice() {
-        double expectedVatPrice = this.item.getPriceWithVAT() - this.item.getPriceBeforeVAT();
-        Assert.assertEquals(expectedVatPrice, this.item.getVATByPrice());
+        double expectedVatPrice = item.getPriceWithVAT() - item.getPriceBeforeVAT();
+        assertEquals(expectedVatPrice, item.getVATByPrice(), "VAT by price should be approx. 1.0");
     }
 
     @Test
     public void testToString() {
-        String result = this.item.toString();
-        Assert.assertTrue("String should contain item ID", result.contains("1"));
-        Assert.assertTrue("String should contain name", result.contains("Milk"));
-        Assert.assertTrue("String should contain description", result.contains("1 liter of milk"));
-        Assert.assertTrue("String should contain price", result.contains("10.0"));
-        Assert.assertTrue("String should contain VAT", result.contains("12.0"));
+        String result = item.toString();
+        assertTrue(result.contains("1"), "String should contain item ID");
+        assertTrue(result.contains("Milk"), "String should contain name");
+        assertTrue(result.contains("1 liter of milk"), "String should contain description");
+        assertTrue(result.contains("21.0"), "String should contain price");
+        assertTrue(result.contains("12.0"), "String should contain VAT");
     }
 }
