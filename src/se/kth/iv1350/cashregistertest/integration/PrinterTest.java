@@ -1,6 +1,5 @@
 package se.kth.iv1350.cashregistertest.integration;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.kth.iv1350.cashregister.integration.Printer;
 
