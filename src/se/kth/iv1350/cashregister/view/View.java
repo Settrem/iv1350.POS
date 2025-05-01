@@ -1,9 +1,10 @@
 package se.kth.iv1350.cashregister.view;
 
 import se.kth.iv1350.cashregister.controller.Controller;
+import se.kth.iv1350.cashregister.dto.CartItemDTO;
+import se.kth.iv1350.cashregister.dto.ItemDTO;
+
 import java.util.ArrayList;
-import se.kth.iv1350.cashregister.DTOs.CartItemDTO;
-import se.kth.iv1350.cashregister.DTOs.ItemDTO;
 
 /**
  * This class represents a simple user interface for the cash register system.

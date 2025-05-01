@@ -1,4 +1,4 @@
-package se.kth.iv1350.cashregister.DTOs;
+package se.kth.iv1350.cashregister.dto;
 
 /**
  * The {@code CartItemDTO} is used to hold both a itemDTO and the

@@ -1,4 +1,4 @@
-package se.kth.iv1350.cashregister.DTOs;
+package se.kth.iv1350.cashregister.dto;
 
 /**
  * This class is a Data Transfer Object (DTO) that holds information about one item.

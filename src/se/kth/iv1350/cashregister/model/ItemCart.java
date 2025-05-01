@@ -1,8 +1,9 @@
 package se.kth.iv1350.cashregister.model;
 
-import se.kth.iv1350.cashregister.DTOs.CartItemDTO;
-import se.kth.iv1350.cashregister.DTOs.ItemDTO;
 import java.util.ArrayList;
+
+import se.kth.iv1350.cashregister.dto.CartItemDTO;
+import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 
 /**

@@ -1,8 +1,9 @@
 package se.kth.iv1350.cashregister.integration;
 
-import se.kth.iv1350.cashregister.DTOs.ItemDTO;
 import java.io.BufferedReader;
 import java.io.FileReader;
+
+import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 
 /**
