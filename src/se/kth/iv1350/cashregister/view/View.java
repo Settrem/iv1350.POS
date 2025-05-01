@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import se.kth.iv1350.cashregister.DTOs.CartItemDTO;
 import se.kth.iv1350.cashregister.DTOs.ItemDTO;
-//import se.kth.iv1350.cashregister.model.CartEntry;
 
 /**
- * Represents the User Interface of the cash register
- * Add vat stuff
+ * This class represents a simple user interface for the cash register system.
+ * It interacts with the {@code Controller} to simulate scanning items, displaying
+ * the cart, and completing a sale through hardcoded test cases.
  */
 public class View {
     private ItemDTO newestItem = null;
@@ -18,9 +18,9 @@ public class View {
     private Controller controller;
 
     /**
-     * Constructor that connects the system to the user interface
-     * 
-     * @param controller Is used to give the view access to the controller over the current system
+     * Creates a new instance of the view and connects it to the system controller.
+     *
+     * @param controller The controller that manages the application's logic and data.
      */
     public View(Controller controller) {
         
@@ -28,6 +28,11 @@ public class View {
 
     }
 
+    /**
+     * Runs a sequence of hardcoded method calls to simulate a typical sale
+     * and demonstrate system functionality. Includes scanning items and ending
+     * the sale.
+     */
     public void test() {
         displayCart(); //cart has not been created yet, should print "Scan item to start sale"
         addItem(16); //item that does not exist, should print "Item not found!"
@@ -39,9 +44,14 @@ public class View {
         addItem(4); //sould print "Gravad lax has been added"
         displayCart(); //Should display two instances of köttbullar and one of gravad lax
         System.out.println(endSale(50000));
-        
     }
 
+    /**
+     * Tries to add an item to the sale using the provided item ID.
+     * Displays a message if the item is not found or confirms addition.
+     *
+     * @param itemID The identifier of the item to add.
+     */
     private void addItem(int itemID) {
         this.newestItem = this.controller.enterItem(itemID);
         if (this.newestItem == null) {
@@ -52,6 +62,12 @@ public class View {
         }
     }
 
+    
+    /**
+     * Displays the contents of the current shopping cart.
+     * Shows item names, amounts, and total price including VAT.
+     * If no sale has started, prompts the user to scan an item.
+     */
     private void displayCart() {
         
         int totalPrice = 0;
@@ -66,8 +82,8 @@ public class View {
                 CartItemDTO item = itemCart.get(i);
                 String name = item.itemDTO.getName();
                 int amount = item.getAmount();
-                double price = item.itemDTO.getPrice();
-                totalPrice += item.itemDTO.getPrice() * item.getAmount();
+                double price = item.itemDTO.getPriceWithVAT();
+                totalPrice += item.itemDTO.getPriceWithVAT() * item.getAmount();
                 System.out.println(name + "  x" + amount + "  " + (amount * price / 100.0) + "kr");
             }
             System.out.println("\n" + totalPrice/100.0 + "kr");
@@ -76,6 +92,12 @@ public class View {
         return;
     }
 
+     /**
+     * Ends the current sale and returns a receipt.
+     *
+     * @param paymentAmount The amount of cash paid by the customer (in öre).
+     * @return A string representation of the printed receipt.
+     */
     private String endSale(int paymentAmount) { // change to PaymentAmount class when added, or remain int/double if omitted
         return controller.endSale(paymentAmount);
     }

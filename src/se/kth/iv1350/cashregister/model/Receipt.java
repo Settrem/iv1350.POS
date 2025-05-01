@@ -4,9 +4,23 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+
+
+/**
+ * Represents a printed receipt for a completed sale.
+ * 
+ * The receipt includes the time of sale, a list of purchased items with prices and VAT,
+ * as well as payment details such as total cost, cash received, and change returned.
+ */
 public class Receipt {
     private String receipt;
 
+    /**
+     * Creates a receipt based on the completed sale and the amount of cash received.
+     *
+     * @param sale The completed {@code Sale} that includes item and payment information.
+     * @param cash The amount of cash received from the customer (in öre, as an integer).
+     */
     public Receipt(Sale sale, int cash)
     {
         int width = 61;
@@ -22,12 +36,12 @@ public class Receipt {
         for(int i = 0; i < cart.size(); i++) {
             CartItemDTO currentEntry = cart.get(i);
             String currentLine = currentEntry.itemDTO.getName();
-            String priceString = "" + currentEntry.getAmount() * currentEntry.itemDTO.getPrice() / 100.0;
+            String priceString = "" + currentEntry.getAmount() * currentEntry.itemDTO.getPriceWithVAT() / 100.0;
             currentLine = currentLine.concat(" ".repeat(25 - currentLine.length()));
-            currentLine = currentLine.concat(currentEntry.getAmount() + " x " + currentEntry.itemDTO.getPrice()/100.0);
+            currentLine = currentLine.concat(currentEntry.getAmount() + " x " + currentEntry.itemDTO.getPriceWithVAT()/100.0);
             currentLine = currentLine.concat(" ".repeat(width - currentLine.length() - priceString.length() - 6));
             currentLine = currentLine.concat(priceString + " SEK\n");
-            //total += currentEntry.getAmount() * currentEntry.itemDTO.getPrice();
+            //total += currentEntry.getAmount() * currentEntry.itemDTO.getPriceWithVAT();
             this.receipt = this.receipt.concat(currentLine);
         }
         String totalString = "" + total/100.0;
@@ -45,6 +59,11 @@ public class Receipt {
         this.receipt = this.receipt.concat("-".repeat((width - 13)/2));
     }
 
+    /**
+     * Returns the full receipt as a printable text string.
+     *
+     * @return A {@code String} containing the formatted receipt.
+     */
     public String printReceipt() {
         return this.receipt;
     }

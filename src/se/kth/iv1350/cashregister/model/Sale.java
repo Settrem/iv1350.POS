@@ -3,32 +3,40 @@ import java.util.ArrayList;
 
 import se.kth.iv1350.cashregister.DTOs.CartItemDTO;
 import se.kth.iv1350.cashregister.DTOs.ItemDTO;
-import se.kth.iv1350.cashregister.model.ItemCart;
 
+/**
+ * Represents a sale transaction in the cash register system.
+ * 
+ * This class is responsible for managing a sale by adding items,
+ * calculating the total price and VAT, accepting payments, and printing a receipt.
+ */
 public class Sale {
 
     public ItemCart itemCart;
     
     /**
-     * Creates a new item cart that will be used in the current sale
+     * Creates a new sale and initializes the item cart.
      */
     public Sale(){
         this.itemCart = new ItemCart();
     }
 
-    /**
-     * Adds item in itemcart
-     * @param item the item that is added
+     /**
+     * Adds an item to the current sale by adding it to the item cart.
+     *
+     * @param item The item to be added to the sale.
      */
     public void addItem(ItemDTO item) {
         itemCart.addItem(item);
     }
 
     /**
-     * Cashier accepts payment and enters amount paid,
-     * Controller calculates change
-     * @param payedAmount The payed amount to the cashier
-     * @param totalPrice The totalprice for the items
+     * Accepts a payment from the customer and returns the change if the payment is sufficient.
+     * 
+     * If the paid amount is less than the total price, the payment is rejected and -1 is returned.
+     *
+     * @param payedAmount The amount of money provided by the customer.
+     * @return The change to be given to the customer, or -1 if the payment fails.
      */
     public double acceptPayment(double payedAmount) {
         if (payedAmount >= this.getTotal()) {
@@ -39,21 +47,30 @@ public class Sale {
         }
     }
 
+    /**
+     * Calculates and returns the change amount based on the paid amount and the total sale price.
+     *
+     * @param payedAmount The amount of money provided by the customer.
+     * @return The difference between the paid amount and the total sale price.
+     */
     private double getChange(double payedAmount){
         return payedAmount - this.getTotal();
     }
 
     /**
-     * Takes the items registered in cart and calculates running total
-     * @param itemcart Imports all items scanned 
+     * Calculates the total price of all items in the sale.
+     * 
+     * The total is computed by summing the price (including VAT) of each item multiplied
+     * by the quantity of that item in the cart.
+     *
+     * @return The total price of the sale.
      */
     public int getTotal() {
         int totalPrice = 0;
         ArrayList<CartItemDTO> cart = this.itemCart.getCart();
         for (int i = 0; i < cart.size(); i++) {
             ItemDTO item = cart.get(i).itemDTO;
-            double price = item.getPrice();
-            double vat = item.getVAT();
+            double price = item.getPriceWithVAT();
             int amount = cart.get(i).getAmount();
             
             totalPrice += amount * price;
@@ -61,20 +78,35 @@ public class Sale {
         return totalPrice;
     }
 
+    /**
+     * Calculates the total VAT for the sale.
+     * 
+     * the total VAT is calculated by summing up the VAT amount for each item
+     * multiplied by the quantity of that item.
+     *
+     * @return The total VAT for the sale.
+     */
     public int getVat() {
         int totalVat = 0;
         ArrayList<CartItemDTO> cart = this.itemCart.getCart();
         for (int i = 0; i < cart.size(); i++) {
             ItemDTO item = cart.get(i).itemDTO;
-            double price = item.getPrice();
-            double vat = item.getVAT();
             int amount = cart.get(i).getAmount();
             
-            totalVat += amount * price * (vat / 100.0);
+            totalVat += amount * item.getVATByPrice();
         }
         return totalVat;
     }
     
+    /**
+     * Generates and returns the receipt for the sale.
+     *
+     * This method creates a {@code Receipt} based on the current sale details and the cash received,
+     * then returns the receipt as a formatted string.
+     *
+     * @param cash The amount of cash provided by the customer.
+     * @return A string representing the formatted receipt.
+     */
     public String getReceipt(int cash) {
         Receipt receipt = new Receipt(this, cash);
         return receipt.printReceipt();

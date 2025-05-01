@@ -1,5 +1,12 @@
 package se.kth.iv1350.cashregister.DTOs;
 
+/**
+ * The {@code CartItemDTO} is used to hold both a itemDTO and the
+ * amount of said item
+ * 
+ * It is used in the {@code ItemCart} to keep track of how many
+ * of one item is scanned inside one entry.
+ */
 public class CartItemDTO {
 
     private int amount;
