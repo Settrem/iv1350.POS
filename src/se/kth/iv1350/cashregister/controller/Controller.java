@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import se.kth.iv1350.cashregister.DTOs.CartItemDTO;
 import se.kth.iv1350.cashregister.DTOs.ItemDTO;
 import se.kth.iv1350.cashregister.model.Sale;
+import se.kth.iv1350.cashregister.integration.Printer;
 
 /**
  * The <code>Controller</code> class acts as the intermediary between the view and the model
@@ -21,6 +22,7 @@ import se.kth.iv1350.cashregister.model.Sale;
 public class Controller {
     private Sale currentSale;
     private RegHandler regHandler;
+    private Printer printerMachine;
 
     /**
      * Initializes the entire model of the system that controls the entire sale
@@ -30,6 +32,7 @@ public class Controller {
      */
     public Controller () {
         this.regHandler = new RegHandler();
+        this.printerMachine = new Printer();
     }
 
     /**
@@ -80,13 +83,13 @@ public class Controller {
      * @param cash is payed amount
      * @return returns the receipt of the sale
      */
-    public String endSale(int cash) {
+    public void endSale(int cash) {
         String receipt = printReceipt(cash);
         if (regHandler.accountSale(this.getSale()) != 0) {//Breaks gdpr maybe
-            return("Error occured while accounting sale!");
+            System.out.println("Error occured while accounting sale!");
         } 
         currentSale = null;
-        return receipt;
+        this.printerMachine.printSale(receipt);
     }
 
     /**

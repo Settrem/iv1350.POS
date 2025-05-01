@@ -1,9 +1,7 @@
 package se.kth.iv1350.cashregister.view;
 
 import se.kth.iv1350.cashregister.controller.Controller;
-
 import java.util.ArrayList;
-
 import se.kth.iv1350.cashregister.DTOs.CartItemDTO;
 import se.kth.iv1350.cashregister.DTOs.ItemDTO;
 
@@ -14,7 +12,6 @@ import se.kth.iv1350.cashregister.DTOs.ItemDTO;
  */
 public class View {
     private ItemDTO newestItem = null;
-
     private Controller controller;
 
     /**
@@ -23,9 +20,7 @@ public class View {
      * @param controller The controller that manages the application's logic and data.
      */
     public View(Controller controller) {
-        
         this.controller = new Controller();
-
     }
 
     /**
@@ -43,7 +38,7 @@ public class View {
         displayCart(); //There should now be two instances of köttbullar
         addItem(4); //sould print "Gravad lax has been added"
         displayCart(); //Should display two instances of köttbullar and one of gravad lax
-        System.out.println(endSale(50000));
+        endSale(50000);
     }
 
     /**
@@ -62,14 +57,12 @@ public class View {
         }
     }
 
-    
     /**
      * Displays the contents of the current shopping cart.
      * Shows item names, amounts, and total price including VAT.
      * If no sale has started, prompts the user to scan an item.
      */
     private void displayCart() {
-        
         int totalPrice = 0;
         if (controller.getSale() == null) {
             System.out.println("Scan item to start sale");
@@ -83,13 +76,12 @@ public class View {
                 String name = item.itemDTO.getName();
                 int amount = item.getAmount();
                 double price = item.itemDTO.getPriceWithVAT();
+
                 totalPrice += item.itemDTO.getPriceWithVAT() * item.getAmount();
                 System.out.println(name + "  x" + amount + "  " + (amount * price / 100.0) + "kr");
             }
             System.out.println("\n" + totalPrice/100.0 + "kr");
         }
-        
-        return;
     }
 
      /**
@@ -98,8 +90,9 @@ public class View {
      * @param paymentAmount The amount of cash paid by the customer (in öre).
      * @return A string representation of the printed receipt.
      */
-    private String endSale(int paymentAmount) { // change to PaymentAmount class when added, or remain int/double if omitted
-        return controller.endSale(paymentAmount);
+    private void endSale(int paymentAmount) { // change to PaymentAmount class when added, or remain int/double if omitted
+        controller.endSale(paymentAmount);
+        System.out.println("Sale has ended");
     }
 }
 
