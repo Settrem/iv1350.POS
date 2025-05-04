@@ -1,11 +1,21 @@
 itemID,name,description,price,vat
-1,Köttbullar,Traditionella svenska köttbullar med potatismos,8900,12
-2,Gravad lax,Lax inlagd med dill och senapssås,11000,12
-3,Räksmörgås,Smörgås toppad med handskalade räkor,11900,12
-4,Pytti panna,Stekt potatis Kött och lök med stekt ägg,7900,12
-5,Prinsesstårta,Svensk klassisk tårta med marsipan,4900,12
-6,Falukorv med stuvade makaroner,Klassisk husmanskost,6900,12
-7,Smörgåstårta,Lager av bröd med fyllningar av skinka och ost,13900,12
-8,Västerbottenpaj,Ostpaj med Västerbottenost,5900,12
-9,Lingonsylt,Burk med hemlagad lingonsylt,3500,12
-10,Ärtsoppa och pannkakor,Torsdagsklassiker med senap och sylt,9900,12
+1,Meatballs,Traditional Swedish meatballs with mashed potatoes,8900,12
+2,Gravlax,Salmon cured with dill and mustard sauce,11000,12
+3,Shrimp Sandwich,Sandwich topped with hand-peeled shrimp,11900,12
+4,Hash with Egg,Fried potatoes and onions with a fried egg,7900,12
+5,Princess Cake,Swedish classic cake with marzipan,4900,12
+6,Falukorv with Macaroni,Classic Swedish sausage with creamy macaroni,6900,12
+7,Sandwich Cake,Layered bread with ham and cheese fillings,13900,12
+8,Västerbotten Cheese Pie,Cheese pie made with Västerbotten cheese,5900,12
+9,Lingonberry Jam,Jar of homemade lingonberry jam,3500,12
+10,Pea Soup and Pancakes,Thursday classic with mustard and jam,9900,12
+11,Toilet Paper Pack,12-roll pack of soft toilet paper,5900,25
+12,Milk 1L,Full-fat cow's milk,1200,12
+13,Cheddar Cheese 300g,Matured cheddar block,4500,12
+14,Chocolate Bar,Milk chocolate 200g,2500,25
+15,Potato Chips 200g,Salted crispy potato chips,3200,25
+16,Shampoo 250ml,Gentle cleansing shampoo,4900,25
+17,Bottled Water 1.5L,Natural spring water,1500,12
+18,Coffee 500g,Ground Arabica coffee,6900,25
+19,Bananas 1kg,Fresh yellow bananas,2500,12
+20,Toothpaste 75ml,Fluoride toothpaste for daily use,2800,25

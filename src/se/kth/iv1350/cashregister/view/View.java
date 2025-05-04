@@ -33,7 +33,7 @@ public class View {
      */
     public void userInterface() {
         while (running) {
-            System.out.println("Enter Item-ID (1-10)");
+            System.out.println("Enter Item-ID (1-20)");
             System.out.println("Type 'endsale' to end current sale");
 
             String input = myScanner.next();
