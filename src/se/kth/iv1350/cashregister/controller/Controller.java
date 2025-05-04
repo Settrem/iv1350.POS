@@ -1,74 +1,160 @@
 package se.kth.iv1350.cashregister.controller;
 
 import se.kth.iv1350.cashregister.integration.RegHandler;
-
+import java.util.Scanner;
 import java.util.ArrayList;
 
+import se.kth.iv1350.cashregister.model.ItemCart;
 import se.kth.iv1350.cashregister.model.Sale;
 import se.kth.iv1350.cashregister.dto.CartItemDTO;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.integration.Printer;
 
 /**
- * The <code>Controller</code> class acts as the intermediary between the view and the model
+ * The <code>Controller</code> class acts as the intermediary between the view
+ * and the model
  * in application.
  * 
  * It coordinates operations such as starting a new sale, adding items,
  * ending the sale, and generating receipts.
  *
- * This class communicates with the {@code Sale}, {@code Printer}, and {@code RegHandler}
- * components of the model, and exposes methods that the view can use to perform user actions.
+ * This class communicates with the {@code Sale}, {@code Printer}, and
+ * {@code RegHandler}
+ * components of the model, and exposes methods that the view can use to perform
+ * user actions.
  */
 public class Controller {
     private Sale currentSale;
     private RegHandler regHandler;
     private Printer printerMachine;
+    private ItemDTO newestItem = null;
+    private boolean endSale = false;
+    private int payedAmount = 0;
+    Scanner myScanner = new Scanner(System.in);
 
     /**
      * Initializes the entire model of the system that controls the entire sale
      * 
-     * By creating {@code Printer} and {@code RegHandler} objects to be able to reach
-     * the integration parts of the aplications. 
+     * By creating {@code Printer} and {@code RegHandler} objects to be able to
+     * reach the integration parts of the aplications
      */
-    public Controller () {
+    public Controller() {
         this.regHandler = new RegHandler();
         this.printerMachine = new Printer();
     }
 
     /**
-     * Creates a new sale
+     * Creates a new sale.
      * 
-     * @return Tells if method was successful (1) or unsuccesful (0) 
+     * @return Tells if method was successful (1) or unsuccesful (0)
      */
     public int startSale() {
         this.currentSale = new Sale();
         System.out.println("----Started New Sale----");
-        return 1; 
+        return 1;
+    }
+
+    /**
+     * Loops current sale until "endsale" is read as input
+     */
+    public void activeSale() {
+        while (!endSale) {
+            scanItem();
+            displayCart();
+        }
+        payedAmount = receivePayment();
+        endSale(payedAmount);
+    }
+
+    /**
+     * Scans user input for itemID to add to cart.
+     * Scans user input for 'endsale' to end current sale.
+     * @return endSale has been called and the sale is moved to the endSale process
+     */
+    public boolean scanItem() {
+        System.out.println("Enter Item-ID (1-10)");
+        System.out.println("Type 'endsale' to end current sale");
+        String input = myScanner.next();
+
+        if (input.equalsIgnoreCase("endsale")) {
+            endSale = true;
+        } else {
+            try {
+                int itemID = Integer.parseInt(input);
+                addItem(itemID);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Enter a number or 'endsale'.");
+            }
+        }
+        return endSale;
+    }
+
+    /**
+     * Displays the contents of the current shopping cart.
+     * Shows item names, amounts, and total price including VAT.
+     * If no sale has started, prompts the user to scan an item.
+     */
+    public void displayCart() {
+        int totalPrice = 0;
+        if (getSale() == null) {
+            System.out.println("Scan item to start sale");
+            return;
+        } else {
+            ArrayList<CartItemDTO> itemCart = this.getCart();
+            System.out.println("Cart: \n -----------");
+            for (int i = 0; i < itemCart.size(); i++) {
+                CartItemDTO item = itemCart.get(i);
+                String name = item.itemDTO.getName();
+                int amount = item.getAmount();
+                double price = item.itemDTO.getPriceWithVAT();
+
+                totalPrice += item.itemDTO.getPriceWithVAT() * item.getAmount();
+                System.out.println(name + "  x" + amount + "  " + (amount * price / 100.0) + "kr");
+            }
+            System.out.println("\n" + totalPrice / 100.0 + "kr\n");
+        }
+    }
+
+    /**
+     * Tries to add an item to the sale using the provided item ID.
+     * Displays a message if the item is not found or confirms addition.
+     *
+     * @param itemID The identifier of the item to add.
+     */
+    private void addItem(int itemID) {
+        this.newestItem = this.enterItem(itemID);
+        if (this.newestItem == null) {
+            System.out.println("Item not found!\n");
+        } else {
+            System.out.println(newestItem.getName() + " was added to cart\n");
+        }
     }
 
     /**
      * Search for a Item matching the specified criteria
+     * 
      * @param itemID is the idetification used to search for a specific item
-     * @return Will return a Item as a Item Data transfer objekt
+     * @return Will return an Item as an Item data transfer object
      */
-    public ItemDTO enterItem(int itemID){
+    public ItemDTO enterItem(int itemID) {
 
         ItemDTO itemDTO = this.regHandler.getItem(itemID);
         if (itemDTO == null) {
-            return itemDTO; //returns null to view if failed
+            return itemDTO; // returns null to view if failed
         }
 
         if (this.currentSale == null) {
             this.startSale();
         }
-        
+
         currentSale.addItem(itemDTO);
         return itemDTO;
     }
 
     /**
      * Gets the current sale information from the
-     * Sale class and returns the it.
+     * Sale class and returns it.
+     * 
      * @return the current sale
      */
     public Sale getSale() {
@@ -76,24 +162,42 @@ public class Controller {
     }
 
     /**
+     * This function takes payment and confirms if it covers the total price.
+     * @return payedAmount 
+     */
+    private int receivePayment() {
+        int change = -1;
+        int payedAmount = 0;
+    
+        while (change == -1) {
+            System.out.print("Enter amount paid by customer: ");
+            payedAmount = myScanner.nextInt() * 100;
+            change = currentSale.acceptPayment(payedAmount);
+        }
+    
+        return payedAmount;
+    }
+
+    /**
      * Runs when ending the sale from view, and tells the
      * Sale to end the currentsale while giving it the payed amount
      * and returns the receipt.
      * 
-     * @param cash is payed amount
+     * @param payedAmount takes in the amount paid
      * @return returns the receipt of the sale
      */
-    public void endSale(int cash) {
-        String receipt = printReceipt(cash);
-        if (regHandler.accountSale(this.getSale()) != 0) {//Breaks gdpr maybe
+    public void endSale(int payedAmount) {
+        String receipt = printReceipt(payedAmount);
+        if (regHandler.accountSale(this.getSale()) != 0) {
             System.out.println("Error occured while accounting sale!");
-        } 
+        }
         currentSale = null;
         this.printerMachine.printSale(receipt);
     }
 
     /**
      * Returns the item cart as a Array List
+     * 
      * @return the item cart
      */
     public ArrayList<CartItemDTO> getCart() {
@@ -106,7 +210,7 @@ public class Controller {
      * 
      * @param cash is the payed amount
      * @return the receipt that represents
-     *         the sale. 
+     *         the sale.
      */
     public String printReceipt(int cash) {
         return currentSale.getReceipt(cash);

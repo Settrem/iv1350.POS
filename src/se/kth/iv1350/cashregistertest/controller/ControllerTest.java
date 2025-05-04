@@ -41,7 +41,6 @@ public class ControllerTest {
         assertNull(item, "ItemDTO should be null for invalid ID");
     }
 
-    /*Fixa denhär */
     @Test
     public void testGetCartAfterAddingItems() {
         controller.enterItem(1);

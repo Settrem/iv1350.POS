@@ -1,4 +1,5 @@
 package se.kth.iv1350.cashregister.model;
+
 import java.util.ArrayList;
 
 import se.kth.iv1350.cashregister.dto.CartItemDTO;
@@ -8,20 +9,21 @@ import se.kth.iv1350.cashregister.dto.ItemDTO;
  * Represents a sale transaction in the cash register system.
  * 
  * This class is responsible for managing a sale by adding items,
- * calculating the total price and VAT, accepting payments, and printing a receipt.
+ * calculating the total price and VAT, accepting payments, and printing a
+ * receipt.
  */
 public class Sale {
 
     public ItemCart itemCart;
-    
+
     /**
      * Creates a new sale and initializes the item cart.
      */
-    public Sale(){
+    public Sale() {
         this.itemCart = new ItemCart();
     }
 
-     /**
+    /**
      * Adds an item to the current sale by adding it to the item cart.
      *
      * @param item The item to be added to the sale.
@@ -31,16 +33,18 @@ public class Sale {
     }
 
     /**
-     * Accepts a payment from the customer and returns the change if the payment is sufficient.
+     * Accepts a payment from the customer and returns the change if the payment is
+     * sufficient.
      * 
-     * If the paid amount is less than the total price, the payment is rejected and -1 is returned.
+     * If the paid amount is less than the total price, the payment is rejected and
+     * -1 is returned.
      *
      * @param payedAmount The amount of money provided by the customer.
      * @return The change to be given to the customer, or -1 if the payment fails.
      */
-    public double acceptPayment(double payedAmount) {
+    public int acceptPayment(int payedAmount) {
         if (payedAmount >= this.getTotal()) {
-            return getChange(payedAmount); 
+            return getChange(payedAmount);
         } else {
             System.out.println("Payment Failed");
             return -1;
@@ -48,19 +52,21 @@ public class Sale {
     }
 
     /**
-     * Calculates and returns the change amount based on the paid amount and the total sale price.
+     * Calculates and returns the change amount based on the paid amount and the
+     * total sale price.
      *
      * @param payedAmount The amount of money provided by the customer.
      * @return The difference between the paid amount and the total sale price.
      */
-    private double getChange(double payedAmount){
+    private int getChange(int payedAmount) {
         return payedAmount - this.getTotal();
     }
 
     /**
      * Calculates the total price of all items in the sale.
      * 
-     * The total is computed by summing the price (including VAT) of each item multiplied
+     * The total is computed by summing the price (including VAT) of each item
+     * multiplied
      * by the quantity of that item in the cart.
      *
      * @return The total price of the sale.
@@ -72,7 +78,7 @@ public class Sale {
             ItemDTO item = cart.get(i).itemDTO;
             double price = item.getPriceWithVAT();
             int amount = cart.get(i).getAmount();
-            
+
             totalPrice += amount * price;
         }
         return totalPrice;
@@ -92,16 +98,17 @@ public class Sale {
         for (int i = 0; i < cart.size(); i++) {
             ItemDTO item = cart.get(i).itemDTO;
             int amount = cart.get(i).getAmount();
-            
+
             totalVat += amount * item.getVATByPrice();
         }
         return totalVat;
     }
-    
+
     /**
      * Generates and returns the receipt for the sale.
      *
-     * This method creates a {@code Receipt} based on the current sale details and the cash received,
+     * This method creates a {@code Receipt} based on the current sale details and
+     * the cash received,
      * then returns the receipt as a formatted string.
      *
      * @param cash The amount of cash provided by the customer.
