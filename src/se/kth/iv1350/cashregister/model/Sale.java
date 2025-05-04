@@ -57,10 +57,8 @@ public class Sale {
         ArrayList<CartItemDTO> cart = this.itemCart.getCart();
         for (int i = 0; i < cart.size(); i++) {
             ItemDTO item = cart.get(i).itemDTO;
-            double price = item.getPriceWithVAT();
-            int amount = cart.get(i).getAmount();
 
-            totalPrice += amount * price;
+            totalPrice += (int)item.getPriceWithVAT();
         }
         return totalPrice;
     }

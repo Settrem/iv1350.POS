@@ -158,8 +158,7 @@ public class Controller {
      */
     public String endSale(int payedAmount) {
 
-        int change = currentSale.getChange(payedAmount);
-        if (change < 0){
+        if (payedAmount < currentSale.getTotal()){
             return("Customer did not provide enough cash, please try again.");
         }
 
