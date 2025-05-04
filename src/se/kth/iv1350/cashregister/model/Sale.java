@@ -33,32 +33,13 @@ public class Sale {
     }
 
     /**
-     * Accepts a payment from the customer and returns the change if the payment is
-     * sufficient.
-     * 
-     * If the paid amount is less than the total price, the payment is rejected and
-     * -1 is returned.
-     *
-     * @param payedAmount The amount of money provided by the customer.
-     * @return The change to be given to the customer, or -1 if the payment fails.
-     */
-    public int acceptPayment(int payedAmount) {
-        if (payedAmount >= this.getTotal()) {
-            return getChange(payedAmount);
-        } else {
-            System.out.println("Payment Failed");
-            return -1;
-        }
-    }
-
-    /**
      * Calculates and returns the change amount based on the paid amount and the
      * total sale price.
      *
      * @param payedAmount The amount of money provided by the customer.
      * @return The difference between the paid amount and the total sale price.
      */
-    private int getChange(int payedAmount) {
+    public int getChange(int payedAmount) {
         return payedAmount - this.getTotal();
     }
 
