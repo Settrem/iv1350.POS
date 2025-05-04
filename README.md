@@ -5,7 +5,7 @@ This repository contains the code developed for the Point of Sale (POS) system p
 
 ## 📌 Overview
 
-The POS system, also known as `CashierSystem`, is a simplified simulation of a real-world point of sale used by retail businesses. The system handles sale transactions, item registration, payment processing, and receipt generation, designed with clean object-oriented principles such as encapsulation, abstraction, and separation of concerns.
+The POS system, also known as `CashierSystem`, is a simplified simulation of a real-world point of sale used by retail businesses. The system handles sale transactions, item registration, payment processing, and receipt generation, designed with object-oriented principles such as encapsulation, high cohesion and low coupling.
 
 ## 🎯 Objectives
 
@@ -22,7 +22,7 @@ The POS system, also known as `CashierSystem`, is a simplified simulation of a r
 - Handle payments and calculate change
 - Generate receipts
 
-## 🧩 Technologies Used
+## 🧩 Tech Used
 
 - Java
 - Standard Java libraries
