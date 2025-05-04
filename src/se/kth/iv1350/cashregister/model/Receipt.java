@@ -45,7 +45,6 @@ public class Receipt {
             currentLine += (currentEntry.getAmount() + " x " + currentEntry.itemDTO.getPriceWithVAT() / 100.0);
             currentLine += (" ".repeat(width - currentLine.length() - priceString.length() - 6));
             currentLine += (priceString + " SEK\n");
-            // total += currentEntry.getAmount() * currentEntry.itemDTO.getPriceWithVAT();
             this.receipt += (currentLine);
         }
         String totalString = "" + total / 100.0;

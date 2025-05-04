@@ -34,7 +34,7 @@ public class CartItemDTOTest {
 
     @Test
     public void testDecrementItem() {
-        cartItem.incrementItem(); // make it 2 first
+        cartItem.incrementItem();
         cartItem.decrementItem();
         assertEquals(1, cartItem.getAmount(), "Amount should be decremented back to 1");
     }

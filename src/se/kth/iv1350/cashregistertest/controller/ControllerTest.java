@@ -30,14 +30,14 @@ public class ControllerTest {
 
     @Test
     public void testEnterValidItem() {
-        ItemDTO item = controller.enterItem(1); // Item ID 1 must exist in RegHandler mock
+        ItemDTO item = controller.enterItem(1);
         assertNotNull(item, "ItemDTO should not be null for valid ID");
         assertEquals(1, item.getItemID(), "Item ID should be 1");
     }
 
     @Test
     public void testEnterInvalidItem() {
-        ItemDTO item = controller.enterItem(-999); // Invalid ID
+        ItemDTO item = controller.enterItem(-999);
         assertNull(item, "ItemDTO should be null for invalid ID");
     }
 

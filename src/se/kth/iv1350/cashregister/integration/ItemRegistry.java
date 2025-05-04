@@ -55,7 +55,7 @@ public class ItemRegistry {
     public ItemDTO getItemById(int itemID) {
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
             String line;
-            br.readLine(); //Skips the header of the CSC file
+            br.readLine(); 
 
             while ((line = br.readLine()) != null) {
                 ItemDTO item = parseCSVLine(line);

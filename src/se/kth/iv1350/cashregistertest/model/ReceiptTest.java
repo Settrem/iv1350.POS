@@ -20,7 +20,7 @@ public class ReceiptTest {
         ItemDTO milk = new ItemDTO(1, "Milk", "1 liter of milk", 2100, 12.0); // 21.00 SEK
         ItemDTO bread = new ItemDTO(2, "Bread", "Whole wheat bread", 3000, 6.0); // 30.00 SEK
         sale.addItem(milk);
-        sale.addItem(milk); // Add milk twice
+        sale.addItem(milk); 
         sale.addItem(bread);
     }
 
@@ -46,7 +46,7 @@ public class ReceiptTest {
 
     @Test
     public void testReceiptCalculatesChangeCorrectly() {
-        int cash = 10000; // 100.00 SEK
+        int cash = 10000;
         Receipt receipt = new Receipt(sale, cash);
         String result = receipt.printReceipt();
     

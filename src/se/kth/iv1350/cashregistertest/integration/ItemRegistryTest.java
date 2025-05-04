@@ -19,7 +19,7 @@ public class ItemRegistryTest {
 
     @Test
     public void testGetExistingItemById() {
-        int itemID = 1; // Köttbullar
+        int itemID = 1;
         ItemDTO item = itemRegistry.getItemById(itemID);
 
         assertNotNull(item, "Item should not be null");
