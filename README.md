@@ -31,12 +31,12 @@ The POS system, also known as `CashierSystem`, is a simplified simulation of a r
 ## 📁 Project Structure
 
 src/kth/iv1350/cashregister
-├── controller/       # Application logic and coordination
-├── dto/              # Data Transfer Objects
-├── integration/      # Simulated external system interfaces
-├── model/            # Core business logic and domain objects
-├── startup/          # Entry point of the application
-└── view/             # User interface simulation (console-based)
+- controller/       # Application logic and coordination
+- dto/              # Data Transfer Objects
+- integration/      # Simulated external system interfaces
+- model/            # Core business logic and domain objects
+- startup/          # Entry point of the application
+- view/             # User interface simulation (console-based)
 
 ## 👥 Contributors
 
