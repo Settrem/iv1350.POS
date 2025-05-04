@@ -93,12 +93,9 @@ public class Controller {
         cartString += "Cart: \n -----------\n";
         for (int i = 0; i < itemCart.size(); i++) {
             CartItemDTO item = itemCart.get(i);
-            String name = item.itemDTO.getName();
-            int amount = item.getAmount();
-            double price = item.itemDTO.getPriceWithVAT();
 
-            totalPrice += item.itemDTO.getPriceWithVAT() * item.getAmount();
-            cartString += (name + "  x" + amount + "  " + (amount * price * ÖRE_TO_SEK) + "kr\n");
+            totalPrice += item.getPriceWithVAT();
+            cartString += item.toString();
         }
         cartString += "\n" + totalPrice * ÖRE_TO_SEK + "kr \n ----------";
         return cartString;
