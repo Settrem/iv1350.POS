@@ -127,7 +127,7 @@ public class Controller {
 
         ItemDTO itemDTO = this.regHandler.getItem(itemID);
         if (itemDTO == null) {
-            return itemDTO; // returns null to view if failed
+            return itemDTO;
         }
 
         if (this.currentSale == null) {

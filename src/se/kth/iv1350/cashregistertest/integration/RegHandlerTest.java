@@ -18,7 +18,7 @@ public class RegHandlerTest {
 
     @Test
     public void testGetItemReturnsCorrectItem() {
-        ItemDTO item = regHandler.getItem(1); // itemID = 1 (Köttbullar)
+        ItemDTO item = regHandler.getItem(1);
         assertNotNull(item, "Item should not be null");
         assertEquals(1, item.getItemID());
         assertEquals("Köttbullar", item.getName());
@@ -26,7 +26,7 @@ public class RegHandlerTest {
 
     @Test
     public void testGetItemReturnsNullForInvalidID() {
-        ItemDTO item = regHandler.getItem(999); // Non-existing ID
+        ItemDTO item = regHandler.getItem(999);
         assertNull(item, "Should return null for invalid item ID");
     }
 

@@ -14,7 +14,7 @@ public class SaleTest {
     @BeforeEach
     void setUp() {
         sale = new Sale();
-        ItemDTO milk = new ItemDTO(1, "Milk", "1 liter of milk", 2100, 12.0); // 21.00 SEK
+        ItemDTO milk = new ItemDTO(1, "Milk", "1 liter of milk", 2100, 12.0); 
         sale.addItem(milk);
     }
 
