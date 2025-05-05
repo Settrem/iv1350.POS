@@ -1,10 +1,7 @@
 package se.kth.iv1350.cashregister.view;
 
 import java.util.Scanner;
-
 import se.kth.iv1350.cashregister.controller.Controller;
-import se.kth.iv1350.cashregister.dto.ItemDTO;
-import se.kth.iv1350.cashregister.model.Sale;
 
 /**
  * This class represents a simple user interface for the cash register system.
@@ -15,7 +12,6 @@ public class View {
     private Controller controller;
     private Scanner myScanner = new Scanner(System.in);
     private boolean endSale = false;
-    private ItemDTO newestItem = null;
     private boolean running = true;
     private static final int SEK_TO_ÖRE = 100;
 
@@ -50,19 +46,6 @@ public class View {
             
         }
         
-    }
-
-    /**
-     * Receives payment input from the user and passes it to the controller to finalize
-     * the sale. Prints the final sale summary.
-     *
-     * @param payedAmount The amount paid by the customer (in öre).
-     * @return The amount paid by the customer (in öre).
-     */
-    private int receivePayment(int payedAmount) {
-        System.out.println(controller.endSale(payedAmount));
-    
-        return payedAmount;
     }
 
     /**

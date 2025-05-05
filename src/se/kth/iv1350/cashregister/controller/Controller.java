@@ -3,7 +3,6 @@ package se.kth.iv1350.cashregister.controller;
 import se.kth.iv1350.cashregister.integration.RegHandler;
 import java.util.ArrayList;
 
-import se.kth.iv1350.cashregister.model.ItemCart;
 import se.kth.iv1350.cashregister.model.Sale;
 import se.kth.iv1350.cashregister.dto.CartItemDTO;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
