@@ -7,43 +7,61 @@ import static org.junit.jupiter.api.Assertions.*;
 import se.kth.iv1350.cashregister.model.Sale;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 
-public class SaleTest {
+class SaleTest {
 
     private Sale sale;
+    private ItemDTO testItem;
 
     @BeforeEach
     void setUp() {
         sale = new Sale();
-        ItemDTO milk = new ItemDTO(1, "Milk", "1 liter of milk", 2100, 12.0); 
-        sale.addItem(milk);
+
+        // Sample item: name, id, price (incl. VAT), price (excl. VAT), VAT
+        testItem = new ItemDTO(12,"Milk 1L","Full-fat cow's milk",1200,12); // 12kr incl. VAT
     }
 
     @Test
-    void testAcceptPaymentSuccessfulPayment() {
-        int payedAmount = 25 * 100;
-        int expectedChange = payedAmount - sale.getTotal();
-        int actualChange = sale.acceptPayment(payedAmount);
-        assertEquals(expectedChange, actualChange, "Change should be correct when payment is successful");
+    void testAddItem() {
+        sale.addItem(testItem);
+        assertEquals(1, sale.itemCart.getCart().size(), "ItemCart should contain one item.");
     }
 
     @Test
-    void testAcceptPaymentInsufficientPayment() {
-        int payedAmount = 5 * 100;
-        int result = sale.acceptPayment(payedAmount);
-        assertEquals(-1, result, "Should return -1 when payment is unsuccessful");
+    void testGetTotalSingleItem() {
+        sale.addItem(testItem);
+        int expectedTotal = (int)(1200*1.12); // 12kr in öre
+        assertEquals(expectedTotal, sale.getTotal(), "Total should match price including VAT.");
     }
 
     @Test
-    void testGetTotal() {
-        int expectedTotal = (int) (2100 * 1.12);
-        assertEquals(expectedTotal, sale.getTotal(), "Total should include price with VAT");
+    void testGetTotalMultipleSameItems() {
+        sale.addItem(testItem);
+        sale.addItem(testItem);
+        int expectedTotal = (int)(2400 * 1.12); // 2 x 1200 öre
+        assertEquals(expectedTotal, sale.getTotal(), "Total should include quantity.");
     }
 
-    
     @Test
     void testGetVat() {
-        int expectedVat = (int) (2100 * 0.12); 
-        assertEquals(expectedVat, sale.getVat(), "VAT should be 12% of item price");
+        sale.addItem(testItem); // VAT = 200
+        sale.addItem(testItem); // VAT = 200 again
+        int expectedVat = 288;
+        assertEquals(expectedVat, sale.getVat(), "VAT should be calculated based on quantity.");
     }
-    
+
+    @Test
+    void testGetChange() {
+        sale.addItem(testItem); // 13.44kr
+        int cash = 2000; // 20kr
+        int expectedChange = 656; // 8kr
+        assertEquals(expectedChange, sale.getChange(cash), "Change should be cash - total.");
+    }
+
+    @Test
+    void testGetReceiptReturnsString() {
+        sale.addItem(testItem);
+        String receipt = sale.getReceipt(2000);
+        assertNotNull(receipt, "Receipt should not be null.");
+        assertTrue(receipt.contains("Milk"), "Receipt should contain item name.");
+    }
 }

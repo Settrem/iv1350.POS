@@ -7,7 +7,6 @@ import se.kth.iv1350.cashregister.view.View;
  * Starts the entire system, the main method creates the POS
  */
 public class Main {
-    
     /**
      * Calls on the constructors for view and controller
      * 

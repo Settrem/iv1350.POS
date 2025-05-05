@@ -98,7 +98,7 @@ public class Controller {
      * @param itemID The identification number of the item.
      * @return The corresponding {@code ItemDTO}, or {@code null} if not found.
      */
-    private ItemDTO enterItem(int itemID) {
+    public ItemDTO enterItem(int itemID) {
 
         ItemDTO itemDTO = this.regHandler.getItem(itemID);
         if (itemDTO == null) {

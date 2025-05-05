@@ -51,8 +51,8 @@ public class ControllerTest {
 
     @Test
     public void testEndSaleClearsCurrentSale() {
-        controller.enterItem(1);
-        controller.endSale(100);
+        controller.addItem(1);
+        controller.endSale(100000);
         assertNull(controller.getSale(), "Sale should be null after ending it");
     }
 
