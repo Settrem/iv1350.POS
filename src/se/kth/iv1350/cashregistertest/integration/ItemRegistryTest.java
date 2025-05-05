@@ -24,8 +24,8 @@ public class ItemRegistryTest {
 
         assertNotNull(item, "Item should not be null");
         assertEquals(itemID, item.getItemID());
-        assertEquals("Köttbullar", item.getName());
-        assertEquals("Traditionella svenska köttbullar med potatismos", item.getDescription());
+        assertEquals("Meatballs", item.getName());
+        assertEquals("Traditional Swedish meatballs with mashed potatoes", item.getDescription());
         assertEquals(8900, item.getPriceBeforeVAT());
         assertEquals(12, item.getVAT());
     }

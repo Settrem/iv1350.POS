@@ -21,7 +21,7 @@ public class RegHandlerTest {
         ItemDTO item = regHandler.getItem(1);
         assertNotNull(item, "Item should not be null");
         assertEquals(1, item.getItemID());
-        assertEquals("Köttbullar", item.getName());
+        assertEquals("Meatballs", item.getName());
     }
 
     @Test

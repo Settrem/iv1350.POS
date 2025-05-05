@@ -52,7 +52,7 @@ public class ReceiptTest {
     
         int expectedTotal = sale.getTotal();
         int expectedChange = cash - expectedTotal;
-        String expectedChangeStr = String.valueOf(expectedChange / 100.0);
+        String expectedChangeStr = String.format("%.2f", expectedChange / 100.0);
     
         assertTrue(result.contains(expectedChangeStr), "Receipt should contain correct change: " + expectedChangeStr);
     }
