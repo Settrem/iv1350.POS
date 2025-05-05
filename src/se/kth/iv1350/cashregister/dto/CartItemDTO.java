@@ -21,14 +21,29 @@ public class CartItemDTO {
         this.itemDTO = itemDTO;
     }
 
+    /**
+     * Returns a formatted string representation of the cart item, including name, quantity, and total price with VAT.
+     *
+     * @return A formatted string describing the cart item.
+     */
     public String toString(){
         return (this.itemDTO.getName() + "  x" + this.amount + "  " + (this.amount * this.itemDTO.getPriceWithVAT() * ÖRE_TO_SEK) + "kr\n");
     }
     
+    /**
+     * Calculates and returns the total price of this item including VAT, based on quantity.
+     *
+     * @return Total price with VAT for the quantity of this item.
+     */
     public int getPriceWithVAT(){
         return this.itemDTO.getPriceWithVAT() * this.amount;
     }
 
+     /**
+     * Calculates and returns the total price before VAT for the quantity of this item.
+     *
+     * @return Total price before VAT.
+     */
     public int getPriceBeforeVAT(){
         return (int)this.itemDTO.getPriceBeforeVAT() * this.amount;
     }

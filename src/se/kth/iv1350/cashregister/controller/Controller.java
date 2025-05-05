@@ -41,42 +41,14 @@ public class Controller {
     }
 
     /**
-     * Creates a new sale.
-     * 
-     * @return Tells if method was successful (1) or unsuccesful (0)
+     * Starts a new sale and initializes the {@code Sale} object.
+     *
+     * @return A confirmation message indicating the sale has started.
      */
     public String startSale() {
         this.currentSale = new Sale();
         return "----Started New Sale----";
     }
-
-
-
-    /**
-     * Scans user input for itemID to add to cart.
-     * Scans user input for 'endsale' to end current sale.
-     * @return endSale has been called and the sale is moved to the endSale process
-     */
-
-     /*
-    public boolean scanItem() {
-        System.out.println("Enter Item-ID (1-10)");
-        System.out.println("Type 'endsale' to end current sale");
-        String input = myScanner.next();
-
-        if (input.equalsIgnoreCase("endsale")) {
-            endSale = true;
-        } else {
-            try {
-                int itemID = Integer.parseInt(input);
-                addItem(itemID);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Enter a number or 'endsale'.");
-            }
-        }
-        return endSale;
-    }
-*/
 
     /**
      * Displays the contents of the current shopping cart.
@@ -118,12 +90,15 @@ public class Controller {
     }
 
     /**
-     * Search for a Item matching the specified criteria
+     * Searches for an item using the given item ID via the registry handler.
      * 
-     * @param itemID is the idetification used to search for a specific item
-     * @return Will return an Item as an Item data transfer object
+     * If no sale has been started, a new sale is created.
+     * If the item is found, it is added to the current sale.
+     *
+     * @param itemID The identification number of the item.
+     * @return The corresponding {@code ItemDTO}, or {@code null} if not found.
      */
-    public ItemDTO enterItem(int itemID) {
+    private ItemDTO enterItem(int itemID) {
 
         ItemDTO itemDTO = this.regHandler.getItem(itemID);
         if (itemDTO == null) {
@@ -149,12 +124,13 @@ public class Controller {
     }
 
     /**
-     * Runs when ending the sale from view, and tells the
-     * Sale to end the currentsale while giving it the payed amount
-     * and returns the receipt.
+     * Finalizes the current sale by processing payment and generating a receipt.
      * 
-     * @param payedAmount takes in the amount paid
-     * @return returns the receipt of the sale
+     * If the paid amount is insufficient, it returns an error message.
+     * Otherwise, it records the sale, prints the receipt, and ends the current sale.
+     *
+     * @param paidAmount The amount paid by the customer (in öre).
+     * @return A message indicating the result of the operation.
      */
     public String endSale(int payedAmount) {
 

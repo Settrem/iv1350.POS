@@ -28,8 +28,10 @@ public class View {
         this.controller = new Controller();
     }
 
-    /**
-     * Loops current sale until "endsale" is read as input
+     /**
+     * Starts the user interface loop for handling sales. Prompts the user to input
+     * item IDs or the keyword "endsale" to complete the sale. Displays cart contents
+     * after each item is scanned.
      */
     public void userInterface() {
         while (running) {
@@ -51,8 +53,11 @@ public class View {
     }
 
     /**
-     * This function takes payment and confirms if it covers the total price.
-     * @return payedAmount 
+     * Receives payment input from the user and passes it to the controller to finalize
+     * the sale. Prints the final sale summary.
+     *
+     * @param payedAmount The amount paid by the customer (in öre).
+     * @return The amount paid by the customer (in öre).
      */
     private int receivePayment(int payedAmount) {
         System.out.println(controller.endSale(payedAmount));
@@ -61,9 +66,10 @@ public class View {
     }
 
     /**
-     * Creates a new sale.
-     * 
-     * @return Tells if method was successful (1) or unsuccesful (0)
+     * Starts a new sale through the controller and prints a message confirming the sale
+     * has started.
+     *
+     * @return Always returns 1 to indicate success.
      */
     public int startSale() {
         System.out.println(this.controller.startSale());
@@ -71,9 +77,11 @@ public class View {
     }
 
     /**
-     * Scans user input for itemID to add to cart.
-     * Scans user input for 'endsale' to end current sale.
-     * @return endSale has been called and the sale is moved to the endSale process
+     * Attempts to parse and add an item to the current sale based on user input.
+     * Prints an error message if the input is not a valid number.
+     *
+     * @param input The user-provided input, expected to be a numeric item ID.
+     * @return The value of endSale, which indicates whether a sale-ending condition has occurred.
      */
     public boolean scanItem(String input) {
         try {
@@ -82,10 +90,14 @@ public class View {
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Enter a number or 'endsale'.");
         }
-    
         return endSale;
     }
 
+    /**
+     * Ends the current sale by prompting the user to enter a payment amount.
+     * Validates the input and forwards the payment to the controller to finalize
+     * the transaction. Repeats until a valid numeric input is entered.
+     */
     public void endSale() {
         boolean complete = false;
         while (complete == false){
