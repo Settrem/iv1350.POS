@@ -69,7 +69,7 @@ public class Controller {
             totalPrice += item.getPriceWithVAT();
             cartString += item.toString();
         }
-        cartString += "\n" + totalPrice * ÖRE_TO_SEK + "kr \n ----------";
+        cartString += "\n" + Math.round(totalPrice * ÖRE_TO_SEK * 100.0) / 100.0 + "kr \n ----------";
         return cartString;
     }
     
