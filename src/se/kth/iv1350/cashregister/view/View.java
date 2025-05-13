@@ -146,7 +146,7 @@ public class View {
         int paidAmount = -1;
         boolean complete = false;
         while (complete == false){
-            System.out.println("Enter payed amount");
+            System.out.println("Enter paid amount");
             String input = myScanner.next();
             try {
                 paidAmount = Integer.parseInt(input) * SEK_TO_ÖRE;
