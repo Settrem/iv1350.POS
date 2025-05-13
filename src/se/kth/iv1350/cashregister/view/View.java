@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import se.kth.iv1350.cashregister.controller.Controller;
 import se.kth.iv1350.cashregister.dto.CartItemDTO;
+import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 /**
  * This class represents a simple user interface for the cash register system.
@@ -35,17 +36,19 @@ public class View {
     public void userInterface() {
         while (running) {
             System.out.println("Enter Item-ID (1-20)");
-            System.out.println("Type 'endsale' to end current sale");
-
+            if (controller.getSale() != null) {
+                System.out.println("Type 'endsale' to end current sale");
+            };
+            
             String input = myScanner.next();
 
-            if (input.equalsIgnoreCase("endsale")) {
-                endSale();
+            if (input.equalsIgnoreCase("endsale") && controller.getSale() != null) {
+                System.out.println(endSale(enterPayment()));
                 
             } else {
-                scanItem(input);
-                System.out.println(this.displayCart());    
+                scanItem(input);      
             }
+            System.out.println(this.displayCart());
             
         }
         
@@ -75,31 +78,59 @@ public class View {
     }
 
     /**
-     * Starts a new sale through the controller and prints a message confirming the sale
-     * has started.
-     *
-     * @return Always returns 1 to indicate success.
-     */
-    public int startSale() {
-        System.out.println(this.controller.startSale());
-        return 1;
-    }
-
-    /**
      * Attempts to parse and add an item to the current sale based on user input.
      * Prints an error message if the input is not a valid number.
      *
      * @param input The user-provided input, expected to be a numeric item ID.
      * @return The value of endSale, which indicates whether a sale-ending condition has occurred.
      */
-    public boolean scanItem(String input) {
+    private boolean scanItem(String input) {
         try {
             int itemID = Integer.parseInt(input);
-            System.out.println(controller.addItem(itemID));
+            System.out.println(this.addItem(itemID));
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Enter a number or 'endsale'.");
+            System.out.println("Invalid input. Enter a number.");
         }
         return endSale;
+    }
+
+    /**
+     * Tries to add an item to the sale using the provided item ID.
+     * Displays a message if the item is not found or confirms addition.
+     *
+     * @param itemID The identifier of the item to add.
+     */
+    private String addItem(int itemID) {
+        ItemDTO newestItem = controller.enterItem(itemID);
+        if (newestItem == null) {
+            return("Item not found!\n");
+        } else {
+            return(newestItem.getName() + " was added to cart\n");
+        }
+    }
+
+        /**
+     * Finalizes the current sale by processing payment and generating a receipt.
+     * 
+     * If the paid amount is insufficient, it returns an error message.
+     * Otherwise, it records the sale, prints the receipt, and ends the current sale.
+     *
+     * @param paidAmount The amount paid by the customer (in öre).
+     * @return A message indicating the result of the operation.
+     */
+    public String endSale(int paidAmount) {
+
+        if (controller.enoughMoney(paidAmount)){
+            return("Customer did not provide enough cash, please try again.");
+        }
+
+        if (!controller.accountSale()) {
+            return("Error occured while accounting sale!");
+        }
+
+        controller.printReceipt(paidAmount);
+        controller.endSale(paidAmount);
+        return("Sale ended successfully!");
     }
 
     /**
@@ -107,19 +138,20 @@ public class View {
      * Validates the input and forwards the payment to the controller to finalize
      * the transaction. Repeats until a valid numeric input is entered.
      */
-    public void endSale() {
+    private int enterPayment() {
+        int paidAmount = -1;
         boolean complete = false;
         while (complete == false){
             System.out.println("Enter payed amount");
             String input = myScanner.next();
             try {
-                int payedAmount = Integer.parseInt(input) * SEK_TO_ÖRE;
-                System.out.println(controller.endSale(payedAmount));
+                paidAmount = Integer.parseInt(input) * SEK_TO_ÖRE;
                 complete = true;
+                
             } catch (NumberFormatException e) {
                 System.out.println("Please input a number.");
             }
-            
         }
+    return(paidAmount);
     }
 }

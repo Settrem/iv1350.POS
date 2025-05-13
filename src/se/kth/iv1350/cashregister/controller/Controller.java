@@ -44,30 +44,8 @@ public class Controller {
      *
      * @return A confirmation message indicating the sale has started.
      */
-    public String startSale() {
+    public void startSale() {
         this.currentSale = new Sale();
-        return "----Started New Sale----";
-    }
-
-    /**
-     * Displays the contents of the current shopping cart.
-     * Shows item names, amounts, and total price including VAT.
-     * If no sale has started, prompts the user to scan an item.
-     */
-
-    /**
-     * Tries to add an item to the sale using the provided item ID.
-     * Displays a message if the item is not found or confirms addition.
-     *
-     * @param itemID The identifier of the item to add.
-     */
-    public String addItem(int itemID) {
-        ItemDTO newestItem = this.enterItem(itemID);
-        if (newestItem == null) {
-            return("Item not found!\n");
-        } else {
-            return(newestItem.getName() + " was added to cart\n");
-        }
     }
 
     /**
@@ -113,19 +91,25 @@ public class Controller {
      * @param paidAmount The amount paid by the customer (in öre).
      * @return A message indicating the result of the operation.
      */
-    public String endSale(int payedAmount) {
+    public void endSale(int paidAmount) {
 
-        if (payedAmount < currentSale.getTotal()){
-            return("Customer did not provide enough cash, please try again.");
-        }
-
-        String receipt = printReceipt(payedAmount);
-        if (regHandler.accountSale(this.getSale()) != 0) {
-            return("Error occured while accounting sale!");
-        }
-        currentSale = null;
+        String receipt = printReceipt(paidAmount);
         this.printerMachine.printSale(receipt);
-        return("Sale ended successfully!");
+        
+        currentSale = null;
+    }
+
+    /**
+     * Checks if enough money was entered at end of sale
+     * 
+     * @return whether or not the amount was enough
+     */
+    public boolean enoughMoney(int paidAmount) {
+        return(paidAmount < currentSale.getTotal());
+    }
+
+    public boolean accountSale() {
+        return regHandler.accountSale(this.getSale()) == 0;
     }
 
     /**
