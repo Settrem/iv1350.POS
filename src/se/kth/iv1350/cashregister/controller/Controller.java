@@ -25,7 +25,7 @@ public class Controller {
     private Sale currentSale;
     private RegHandler regHandler;
     private Printer printerMachine;
-    private static final double ÖRE_TO_SEK = 0.01;
+    
     
 
     /**
@@ -54,24 +54,6 @@ public class Controller {
      * Shows item names, amounts, and total price including VAT.
      * If no sale has started, prompts the user to scan an item.
      */
-    public String displayCart() {
-        int totalPrice = 0;
-        if (getSale() == null) {
-            return("Scan item to start sale");
-        }
-        String cartString = "";
-        ArrayList<CartItemDTO> itemCart = this.getCart();
-        cartString += "Cart: \n -----------\n";
-        for (int i = 0; i < itemCart.size(); i++) {
-            CartItemDTO item = itemCart.get(i);
-
-            totalPrice += item.getPriceWithVAT();
-            cartString += item.toString();
-        }
-        cartString += "\n" + Math.round(totalPrice * ÖRE_TO_SEK * 100.0) / 100.0 + "kr \n ----------";
-        return cartString;
-    }
-    
 
     /**
      * Tries to add an item to the sale using the provided item ID.

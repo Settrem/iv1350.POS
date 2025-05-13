@@ -1,7 +1,9 @@
 package se.kth.iv1350.cashregister.view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import se.kth.iv1350.cashregister.controller.Controller;
+import se.kth.iv1350.cashregister.dto.CartItemDTO;
 
 /**
  * This class represents a simple user interface for the cash register system.
@@ -14,6 +16,7 @@ public class View {
     private boolean endSale = false;
     private boolean running = true;
     private static final int SEK_TO_ÖRE = 100;
+    private static final double ÖRE_TO_SEK = 0.01;
 
     /**
      * Creates a new instance of the view and connects it to the system controller.
@@ -41,11 +44,34 @@ public class View {
                 
             } else {
                 scanItem(input);
-                System.out.println(controller.displayCart());    
+                System.out.println(this.displayCart());    
             }
             
         }
         
+    }
+
+        /**
+     * Displays the contents of the current shopping cart.
+     * Shows item names, amounts, and total price including VAT.
+     * If no sale has started, prompts the user to scan an item.
+     */
+    public String displayCart() {
+        int totalPrice = 0;
+        if (controller.getSale() == null) {
+            return("Scan item to start sale");
+        }
+        String cartString = "";
+        ArrayList<CartItemDTO> itemCart = controller.getCart();
+        cartString += "Cart: \n -----------\n";
+        for (int i = 0; i < itemCart.size(); i++) {
+            CartItemDTO item = itemCart.get(i);
+
+            totalPrice += item.getPriceWithVAT();
+            cartString += item.toString();
+        }
+        cartString += "\n" + Math.round(totalPrice * ÖRE_TO_SEK * 100.0) / 100.0 + "kr \n ----------";
+        return cartString;
     }
 
     /**
