@@ -43,7 +43,7 @@ public class View {
             String input = myScanner.next();
 
             if (input.equalsIgnoreCase("endsale") && controller.getSale() != null) {
-                System.out.println(endSale(enterPayment()));
+                System.out.println(this.endSale(enterPayment()));
                 
             } else {
                 scanItem(input);      
@@ -59,7 +59,7 @@ public class View {
      * Shows item names, amounts, and total price including VAT.
      * If no sale has started, prompts the user to scan an item.
      */
-    public String displayCart() {
+    private String displayCart() {
         int totalPrice = 0;
         if (controller.getSale() == null) {
             return("Scan item to start sale");
@@ -109,7 +109,7 @@ public class View {
         }
     }
 
-        /**
+    /**
      * Finalizes the current sale by processing payment and generating a receipt.
      * 
      * If the paid amount is insufficient, it returns an error message.
@@ -118,7 +118,7 @@ public class View {
      * @param paidAmount The amount paid by the customer (in öre).
      * @return A message indicating the result of the operation.
      */
-    public String endSale(int paidAmount) {
+    private String endSale(int paidAmount) {
 
         if (controller.enoughMoney(paidAmount)){
             return("Customer did not provide enough cash, please try again.");
