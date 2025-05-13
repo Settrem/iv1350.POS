@@ -1,6 +1,7 @@
 package se.kth.iv1350.cashregister.model;
 
 import java.util.ArrayList;
+
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 /**
@@ -34,11 +35,11 @@ public class Sale {
      * Calculates and returns the change amount based on the paid amount and the
      * total sale price.
      *
-     * @param payedAmount The amount of money provided by the customer.
+     * @param paidAmount The amount of money provided by the customer.
      * @return The difference between the paid amount and the total sale price.
      */
-    public int getChange(int payedAmount) {
-        return payedAmount - this.getTotal();
+    public int getChange(int paidAmount) {
+        return paidAmount - this.getTotal();
     }
 
     /**

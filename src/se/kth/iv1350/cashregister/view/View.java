@@ -16,8 +16,10 @@ public class View {
     private Scanner myScanner = new Scanner(System.in);
     private boolean endSale = false;
     private boolean running = true;
+    private TotalRevenueView revenueView = new TotalRevenueView();
     private static final int SEK_TO_ÖRE = 100;
     private static final double ÖRE_TO_SEK = 0.01;
+
 
     /**
      * Creates a new instance of the view and connects it to the system controller.
@@ -25,7 +27,8 @@ public class View {
      * @param controller The controller that manages the application's logic and data.
      */
     public View(Controller controller) {
-        this.controller = new Controller();
+        this.controller = controller;
+        this.controller.addRevenueObserver(revenueView);
     }
 
      /**
@@ -35,6 +38,7 @@ public class View {
      */
     public void userInterface() {
         while (running) {
+            this.revenueView.printRevenue();
             System.out.println("Enter Item-ID (1-20)");
             if (controller.getSale() != null) {
                 System.out.println("Type 'endsale' to end current sale");
@@ -155,3 +159,5 @@ public class View {
     return(paidAmount);
     }
 }
+
+

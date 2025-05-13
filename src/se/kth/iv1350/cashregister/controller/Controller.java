@@ -4,6 +4,7 @@ import se.kth.iv1350.cashregister.integration.RegHandler;
 import java.util.ArrayList;
 
 import se.kth.iv1350.cashregister.model.CartItem;
+import se.kth.iv1350.cashregister.model.RevenueObserver;
 import se.kth.iv1350.cashregister.model.Sale;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.integration.Printer;
@@ -25,7 +26,8 @@ public class Controller {
     private Sale currentSale;
     private RegHandler regHandler;
     private Printer printerMachine;
-    
+
+    private ArrayList<RevenueObserver> revenueObservers = new ArrayList<>();
     
 
     /**
@@ -95,6 +97,7 @@ public class Controller {
 
         String receipt = printReceipt(paidAmount);
         this.printerMachine.printSale(receipt);
+        this.notifyObservers();
         
         currentSale = null;
     }
@@ -108,6 +111,10 @@ public class Controller {
         return(paidAmount < currentSale.getTotal());
     }
 
+    /**
+     * enters the current sale into the accounting registry.
+     * @return the result of the operation, 0 if concluded
+     */
     public boolean accountSale() {
         return regHandler.accountSale(this.getSale()) == 0;
     }
@@ -133,4 +140,11 @@ public class Controller {
         return currentSale.getReceipt(cash);
     }
 
+    private void notifyObservers(){
+        revenueObservers.forEach(RevenueObserver -> RevenueObserver.newSale(currentSale.getTotal()));
+    }
+
+    public void addRevenueObserver(RevenueObserver obs){
+        revenueObservers.add(obs);
+    }
 }
