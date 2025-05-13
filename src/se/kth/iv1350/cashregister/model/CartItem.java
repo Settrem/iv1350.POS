@@ -1,4 +1,6 @@
-package se.kth.iv1350.cashregister.dto;
+package se.kth.iv1350.cashregister.model;
+
+import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 /**
  * The {@code CartItemDTO} is used to hold both a itemDTO and the
@@ -7,7 +9,7 @@ package se.kth.iv1350.cashregister.dto;
  * It is used in the {@code ItemCart} to keep track of how many
  * of one item is scanned inside one entry.
  */
-public class CartItemDTO {
+public class CartItem {
     private int amount;
     public ItemDTO itemDTO;
     private static final double ÖRE_TO_SEK = 0.01;
@@ -16,7 +18,7 @@ public class CartItemDTO {
      * Creates a cartItem that stores a itemDTO and the amount of that item
      * @param itemDTO The itemDTO that is to be stored
      */
-    public CartItemDTO(ItemDTO itemDTO) {
+    public CartItem(ItemDTO itemDTO) {
         amount = 1;
         this.itemDTO = itemDTO;
     }

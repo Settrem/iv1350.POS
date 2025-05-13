@@ -1,8 +1,8 @@
-package se.kth.iv1350.cashregistertest.dto;
+package se.kth.iv1350.cashregistertest.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import se.kth.iv1350.cashregister.dto.CartItemDTO;
+import se.kth.iv1350.cashregister.model.CartItem;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 /**
  * Unit tests for the CartItemDTO class.
  */
-public class CartItemDTOTest {
-    private CartItemDTO cartItem;
+public class CartItemTest {
+    private CartItem cartItem;
     private ItemDTO testItem;
 
     @BeforeEach
     public void setUp() {
         testItem = new ItemDTO(1, "Milk", "1 liter of milk", 21.0, 12.0);
-        cartItem = new CartItemDTO(testItem);
+        cartItem = new CartItem(testItem);
     }
 
     @Test

@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-import se.kth.iv1350.cashregister.dto.CartItemDTO;
-
 /**
  * Represents a printed receipt for a completed sale.
  * 
@@ -36,9 +34,9 @@ public class Receipt {
         this.receipt += ("-".repeat((width - 15) / 2));
         this.receipt += ("\nTime of sale: ");
         this.receipt += (LocalDate.now() + " " + LocalTime.now().withSecond(0).withNano(0).toString() + "\n\n");
-        ArrayList<CartItemDTO> cart = sale.itemCart.cart;
+        ArrayList<CartItem> cart = sale.itemCart.cart;
         for (int i = 0; i < cart.size(); i++) {
-            CartItemDTO currentEntry = cart.get(i);
+            CartItem currentEntry = cart.get(i);
             String currentLine = currentEntry.itemDTO.getName();
             String priceString = "" + currentEntry.getAmount() * currentEntry.itemDTO.getPriceWithVAT() / 100.0;
             currentLine += (" ".repeat(40 - currentLine.length()));

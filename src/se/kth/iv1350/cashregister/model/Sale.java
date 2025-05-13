@@ -1,8 +1,6 @@
 package se.kth.iv1350.cashregister.model;
 
 import java.util.ArrayList;
-
-import se.kth.iv1350.cashregister.dto.CartItemDTO;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 /**
@@ -54,9 +52,9 @@ public class Sale {
      */
     public int getTotal() {
         int totalPrice = 0;
-        ArrayList<CartItemDTO> cart = this.itemCart.getCart();
+        ArrayList<CartItem> cart = this.itemCart.getCart();
         for (int i = 0; i < cart.size(); i++) {
-            CartItemDTO item = cart.get(i);
+            CartItem item = cart.get(i);
 
             totalPrice += (int)item.getPriceWithVAT();
         }
@@ -73,9 +71,9 @@ public class Sale {
      */
     public int getVat() {
         int totalVat = 0;
-        ArrayList<CartItemDTO> cart = this.itemCart.getCart();
+        ArrayList<CartItem> cart = this.itemCart.getCart();
         for (int i = 0; i < cart.size(); i++) {
-            CartItemDTO item = cart.get(i);
+            CartItem item = cart.get(i);
 
             totalVat += item.getPriceWithVAT() - item.getPriceBeforeVAT();
         }

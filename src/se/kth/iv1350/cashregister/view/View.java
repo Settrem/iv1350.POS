@@ -3,7 +3,7 @@ package se.kth.iv1350.cashregister.view;
 import java.util.ArrayList;
 import java.util.Scanner;
 import se.kth.iv1350.cashregister.controller.Controller;
-import se.kth.iv1350.cashregister.dto.CartItemDTO;
+import se.kth.iv1350.cashregister.model.CartItem;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 /**
@@ -65,10 +65,10 @@ public class View {
             return("Scan item to start sale");
         }
         String cartString = "";
-        ArrayList<CartItemDTO> itemCart = controller.getCart();
+        ArrayList<CartItem> itemCart = controller.getCart();
         cartString += "Cart: \n -----------\n";
         for (int i = 0; i < itemCart.size(); i++) {
-            CartItemDTO item = itemCart.get(i);
+            CartItem item = itemCart.get(i);
 
             totalPrice += item.getPriceWithVAT();
             cartString += item.toString();

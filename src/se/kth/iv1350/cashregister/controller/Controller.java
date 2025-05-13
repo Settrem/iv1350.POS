@@ -3,8 +3,8 @@ package se.kth.iv1350.cashregister.controller;
 import se.kth.iv1350.cashregister.integration.RegHandler;
 import java.util.ArrayList;
 
+import se.kth.iv1350.cashregister.model.CartItem;
 import se.kth.iv1350.cashregister.model.Sale;
-import se.kth.iv1350.cashregister.dto.CartItemDTO;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.integration.Printer;
 
@@ -117,7 +117,7 @@ public class Controller {
      * 
      * @return the item cart
      */
-    public ArrayList<CartItemDTO> getCart() {
+    public ArrayList<CartItem> getCart() {
         return this.currentSale.itemCart.getCart();
     }
 

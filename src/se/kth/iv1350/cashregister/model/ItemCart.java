@@ -2,7 +2,6 @@ package se.kth.iv1350.cashregister.model;
 
 import java.util.ArrayList;
 
-import se.kth.iv1350.cashregister.dto.CartItemDTO;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 
 
@@ -14,7 +13,7 @@ import se.kth.iv1350.cashregister.dto.ItemDTO;
  */
 public class ItemCart {
     
-    public ArrayList<CartItemDTO> cart = new ArrayList<CartItemDTO>();
+    public ArrayList<CartItem> cart = new ArrayList<CartItem>();
     
     /**
      * Searches for item inside the of the itemCart,
@@ -45,7 +44,7 @@ public class ItemCart {
         if(itemIndex != -1){
             cart.get(itemIndex).incrementItem();
         } else {
-            cart.add(new CartItemDTO(itemDTO));
+            cart.add(new CartItem(itemDTO));
         }
 
     }
@@ -81,7 +80,7 @@ public class ItemCart {
      *
      * @return A list of {@code CartItemDTO} representing all items and their quantities in the cart.
      */
-    public ArrayList<CartItemDTO> getCart() {
+    public ArrayList<CartItem> getCart() {
         return this.cart;
     }
 }

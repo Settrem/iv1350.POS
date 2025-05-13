@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.model.ItemCart;
-import se.kth.iv1350.cashregister.dto.CartItemDTO;
+import se.kth.iv1350.cashregister.model.CartItem;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class ItemCartTest {
     @Test
     public void testAddNewItem() {
         cart.addItem(milk);
-        ArrayList<CartItemDTO> items = cart.getCart();
+        ArrayList<CartItem> items = cart.getCart();
         assertEquals(1, items.size(), "Cart should contain 1 item");
         assertEquals(milk.getItemID(), items.get(0).itemDTO.getItemID(), "Item in cart should be milk");
         assertEquals(1, items.get(0).getAmount(), "Amount should be 1");
@@ -39,7 +39,7 @@ public class ItemCartTest {
     public void testAddSameItemTwice() {
         cart.addItem(milk);
         cart.addItem(milk);
-        ArrayList<CartItemDTO> items = cart.getCart();
+        ArrayList<CartItem> items = cart.getCart();
         assertEquals(1, items.size(), "Cart should still contain 1 item");
         assertEquals(2, items.get(0).getAmount(), "Amount should be incremented to 2");
     }
@@ -48,7 +48,7 @@ public class ItemCartTest {
     public void testAddDifferentItems() {
         cart.addItem(milk);
         cart.addItem(bread);
-        ArrayList<CartItemDTO> items = cart.getCart();
+        ArrayList<CartItem> items = cart.getCart();
         assertEquals(2, items.size(), "Cart should contain 2 different items");
     }
 
@@ -79,7 +79,7 @@ public class ItemCartTest {
     public void testGetCartReturnsCorrectList() {
         cart.addItem(milk);
         cart.addItem(bread);
-        ArrayList<CartItemDTO> items = cart.getCart();
+        ArrayList<CartItem> items = cart.getCart();
         assertNotNull(items, "getCart should not return null");
         assertEquals(2, items.size(), "getCart should return 2 items");
     }
