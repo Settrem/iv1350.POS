@@ -40,12 +40,16 @@ public class RegHandler {
      *
      * @param itemID The ID of the item to look for.
      * @return The {@code ItemDTO} if the item is found, or {@code null} if not found.
+     * @throws FailureToReachDataBaseException
      */
-    public ItemDTO getItem(int itemID){
+    public ItemDTO getItem(int itemID) throws FailureToReachDataBaseException{
+        try {
+            ItemDTO itemDTO = itemRegistry.getItemById(itemID);
+            return itemDTO;
+        } catch (FailureToReachDataBaseException e) {
+            throw new FailureToReachDataBaseException("Could not find the filepath to the item Registry");
+        }
 
-        ItemDTO itemDTO = itemRegistry.getItemById(itemID);
-
-        return itemDTO;
     }
 
     /**

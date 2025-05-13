@@ -7,6 +7,7 @@ import se.kth.iv1350.cashregister.model.CartItem;
 import se.kth.iv1350.cashregister.model.RevenueObserver;
 import se.kth.iv1350.cashregister.model.Sale;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
+import se.kth.iv1350.cashregister.integration.FailureToReachDataBaseException;
 import se.kth.iv1350.cashregister.integration.Printer;
 
 /**
@@ -60,18 +61,21 @@ public class Controller {
      * @return The corresponding {@code ItemDTO}, or {@code null} if not found.
      */
     public ItemDTO enterItem(int itemID) {
-
-        ItemDTO itemDTO = this.regHandler.getItem(itemID);
-        if (itemDTO == null) {
+        try {
+            ItemDTO itemDTO = this.regHandler.getItem(itemID);
+            if (itemDTO == null) {
+                return itemDTO;
+            }
+    
+            if (this.currentSale == null) {
+                this.startSale();
+            }
+    
+            currentSale.addItem(itemDTO);
             return itemDTO;
+        } catch (FailureToReachDataBaseException e) {
+            throw new NoItemFoundException("Not able to find item in Item Registry");
         }
-
-        if (this.currentSale == null) {
-            this.startSale();
-        }
-
-        currentSale.addItem(itemDTO);
-        return itemDTO;
     }
 
     /**

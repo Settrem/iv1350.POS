@@ -1,7 +1,9 @@
 package se.kth.iv1350.cashregister.integration;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 
@@ -51,8 +53,9 @@ public class ItemRegistry {
      *
      * @param itemID The ID of the item to look for.
      * @return The {@code ItemDTO} if found, or {@code null} if not found or an error happens.
+     * @throws FailureToReachDataBaseException not able to reach database
      */
-    public ItemDTO getItemById(int itemID) {
+    public ItemDTO getItemById(int itemID) throws FailureToReachDataBaseException {
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
             String line;
             br.readLine(); 
@@ -63,9 +66,8 @@ public class ItemRegistry {
                     return item;
                 }           
             }
-       
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new FailureToReachDataBaseException("Could not find the filepath to the item Registry");
         }
         return null; 
     }
