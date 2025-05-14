@@ -64,6 +64,10 @@ public class RegHandler {
         }
         return 0;
     }
+
+    public Sale getAccountedSale(int index){
+        return accountingRegistry.sales.get(index);
+    }
     
 
 }

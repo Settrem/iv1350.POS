@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Used to register Sales in the accounting system
  */
 public class AccountingRegistry {
-    private ArrayList<Sale> sales;
+    public ArrayList<Sale> sales;
     public AccountingRegistry() {
         this.sales = new ArrayList<Sale>();
     }

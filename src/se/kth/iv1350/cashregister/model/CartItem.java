@@ -9,7 +9,7 @@ import se.kth.iv1350.cashregister.dto.ItemDTO;
  * It is used in the {@code ItemCart} to keep track of how many
  * of one item is scanned inside one entry.
  */
-public class CartItem {
+public class CartItem{
     private int amount;
     public ItemDTO itemDTO;
     private static final double ÖRE_TO_SEK = 0.01;
