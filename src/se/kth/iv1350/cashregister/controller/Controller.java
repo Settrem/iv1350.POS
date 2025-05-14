@@ -64,7 +64,7 @@ public class Controller {
         try {
             ItemDTO itemDTO = this.regHandler.getItem(itemID);
             if (itemDTO == null) {
-                return itemDTO;
+                throw new NoItemFoundException("Item with ID " + itemID + " was not found!");
             }
     
             if (this.currentSale == null) {
@@ -74,7 +74,7 @@ public class Controller {
             currentSale.addItem(itemDTO);
             return itemDTO;
         } catch (FailureToReachDataBaseException e) {
-            throw new NoItemFoundException("Not able to find item in Item Registry");
+            throw new NetworkFailureException("Failed to reach item registry!");
         }
     }
 
