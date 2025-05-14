@@ -3,8 +3,6 @@ package se.kth.iv1350.cashregister.view;
 import java.util.ArrayList;
 import java.util.Scanner;
 import se.kth.iv1350.cashregister.controller.Controller;
-import se.kth.iv1350.cashregister.controller.NetworkFailureException;
-import se.kth.iv1350.cashregister.controller.NoItemFoundException;
 import se.kth.iv1350.cashregister.model.CartItem;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 

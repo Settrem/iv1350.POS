@@ -1,7 +1,6 @@
 package se.kth.iv1350.cashregister.integration;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
