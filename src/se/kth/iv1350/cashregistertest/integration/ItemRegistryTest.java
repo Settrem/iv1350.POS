@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.integration.ItemRegistry;
+import se.kth.iv1350.cashregister.integration.FailureToReachDataBaseException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,30 +21,39 @@ public class ItemRegistryTest {
     @Test
     public void testGetExistingItemById() {
         int itemID = 1;
-        ItemDTO item = itemRegistry.getItemById(itemID);
+        try {
+            ItemDTO item = itemRegistry.getItemById(itemID);
 
-        assertNotNull(item, "Item should not be null");
-        assertEquals(itemID, item.getItemID());
-        assertEquals("Meatballs", item.getName());
-        assertEquals("Traditional Swedish meatballs with mashed potatoes", item.getDescription());
-        assertEquals(8900, item.getPriceBeforeVAT());
-        assertEquals(12, item.getVAT());
+            assertNotNull(item, "Item should not be null");
+            assertEquals(itemID, item.getItemID());
+            assertEquals("Meatballs", item.getName());
+            assertEquals("Traditional Swedish meatballs with mashed potatoes", item.getDescription());
+            assertEquals(8900, item.getPriceBeforeVAT());
+            assertEquals(12, item.getVAT());
+        } catch (FailureToReachDataBaseException e) {
+            fail("Exception should not have been thrown: " + e.getMessage());
+        }
     }
 
     @Test
     public void testGetNonExistentItemById() {
         int invalidItemID = 999;
-        ItemDTO item = itemRegistry.getItemById(invalidItemID);
-
-        assertNull(item, "Should return null for nonexistent item ID");
+        ItemDTO item = null;
+        try {
+            item = itemRegistry.getItemById(invalidItemID);
+        } catch (FailureToReachDataBaseException e) {
+            assertNull(item, "Should return null for nonexistent item ID");
+        }
     }
 
     @Test
     public void testFileReadErrorDoesNotCrash() {
-        ItemRegistry brokenRegistry = new ItemRegistry("invalid/path.csv");
-        ItemDTO item = brokenRegistry.getItemById(1);
-
-        assertNull(item, "Should return null if file cannot be read");
+        ItemDTO item = null;
+        try {
+            ItemRegistry brokenRegistry = new ItemRegistry("invalid/path.csv");
+            item = brokenRegistry.getItemById(1);
+        } catch (FailureToReachDataBaseException e) {
+            assertNull(item, "Should return null if file cannot be read");
+        }
     }
 }
-

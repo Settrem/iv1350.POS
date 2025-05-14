@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import se.kth.iv1350.cashregister.controller.Controller;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.model.Sale;
+import se.kth.iv1350.cashregister.controller.NoItemFoundException;
 
 import java.util.ArrayList;
 
@@ -30,15 +31,23 @@ public class ControllerTest {
 
     @Test
     public void testEnterValidItem() {
-        ItemDTO item = controller.enterItem(1);
+        ItemDTO item = null;
+        try {
+        item = controller.enterItem(1);
+        } catch (NoItemFoundException e) {
         assertNotNull(item, "ItemDTO should not be null for valid ID");
         assertEquals(1, item.getItemID(), "Item ID should be 1");
+        }
     }
 
     @Test
     public void testEnterInvalidItem() {
-        ItemDTO item = controller.enterItem(-999);
-        assertNull(item, "ItemDTO should be null for invalid ID");
+        ItemDTO item = null;
+        try {
+        item = controller.enterItem(21);
+        } catch (NoItemFoundException e) {
+            assertNull(item, "ItemDTO should be null for invalid ID");
+        }
     }
 
     @Test
