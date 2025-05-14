@@ -74,7 +74,7 @@ public class Controller {
             currentSale.addItem(itemDTO);
             return itemDTO;
         } catch (FailureToReachDataBaseException e) {
-            throw new NetworkFailureException("Failed to reach item registry!");
+            throw new NetworkFailureException(e.getMessage());
         }
     }
 

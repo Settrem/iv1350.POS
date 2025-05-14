@@ -67,7 +67,7 @@ public class ItemRegistry {
                 }           
             }
         } catch (IOException e) {
-            throw new FailureToReachDataBaseException("Could not find the filepath to the item Registry");
+            throw new FailureToReachDataBaseException("Failed to reach item registry!");
         }
         return null; 
     }

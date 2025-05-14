@@ -47,7 +47,7 @@ public class RegHandler {
             ItemDTO itemDTO = itemRegistry.getItemById(itemID);
             return itemDTO;
         } catch (FailureToReachDataBaseException e) {
-            throw new FailureToReachDataBaseException("Could not find the filepath to the item Registry");
+            throw e;
         }
 
     }
