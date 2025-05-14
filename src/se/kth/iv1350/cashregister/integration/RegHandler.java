@@ -40,9 +40,9 @@ public class RegHandler {
      *
      * @param itemID The ID of the item to look for.
      * @return The {@code ItemDTO} if the item is found, or {@code null} if not found.
-     * @throws FailureToReachDataBaseException
+     * @throws FailureToReachDateBaseException if getItem fails to connect to database
      */
-    public ItemDTO getItem(int itemID) throws FailureToReachDataBaseException{
+    public ItemDTO getItem(int itemID) throws FailureToReachDataBaseException {
         try {
             ItemDTO itemDTO = itemRegistry.getItemById(itemID);
             return itemDTO;

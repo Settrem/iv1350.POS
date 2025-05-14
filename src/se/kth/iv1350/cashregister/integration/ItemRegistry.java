@@ -52,7 +52,7 @@ public class ItemRegistry {
      *
      * @param itemID The ID of the item to look for.
      * @return The {@code ItemDTO} if found, or {@code null} if not found or an error happens.
-     * @throws FailureToReachDataBaseException not able to reach database
+     * @throws FailureToReachDateBaseException if getItemById fails to connect to database
      */
     public ItemDTO getItemById(int itemID) throws FailureToReachDataBaseException {
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {

@@ -58,9 +58,11 @@ public class Controller {
      * If the item is found, it is added to the current sale.
      *
      * @param itemID The identification number of the item.
-     * @return The corresponding {@code ItemDTO}, or {@code null} if not found.
+     * @return The corresponding {@code ItemDTO}.
+     * @throws NoItemFoundException if itemID isn't found
+     * @throws NetworkFailureException if enterItem fails to connect to database
      */
-    public ItemDTO enterItem(int itemID) {
+    public ItemDTO enterItem(int itemID) throws NoItemFoundException, NetworkFailureException {
         try {
             ItemDTO itemDTO = this.regHandler.getItem(itemID);
             if (itemDTO == null) {
