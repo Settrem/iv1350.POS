@@ -9,6 +9,7 @@ import se.kth.iv1350.cashregister.model.Sale;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.integration.FailureToReachDataBaseException;
 import se.kth.iv1350.cashregister.integration.Printer;
+import se.kth.iv1350.cashregister.util.*;
 
 /**
  * The <code>Controller</code> class acts as the intermediary between the view
@@ -27,6 +28,7 @@ public class Controller {
     private Sale currentSale;
     private RegHandler regHandler;
     private Printer printerMachine;
+    private final Logger logger;
 
     private ArrayList<RevenueObserver> revenueObservers = new ArrayList<>();
     
@@ -37,7 +39,8 @@ public class Controller {
      * By creating {@code Printer} and {@code RegHandler} objects to be able to
      * reach the integration parts of the aplications
      */
-    public Controller() {
+    public Controller(Logger logger) {
+        this.logger = logger;
         this.regHandler = new RegHandler();
         this.printerMachine = new Printer();
     }
@@ -66,7 +69,9 @@ public class Controller {
         try {
             ItemDTO itemDTO = this.regHandler.getItem(itemID);
             if (itemDTO == null) {
-                throw new NoItemFoundException("Item with ID " + itemID + " was not found!");
+                NoItemFoundException e = new NoItemFoundException("Item with ID " + itemID + " was not found!");
+                logger.log("Exception: " + e.getMessage());
+                throw e;
             }
     
             if (this.currentSale == null) {
@@ -76,6 +81,7 @@ public class Controller {
             currentSale.addItem(itemDTO);
             return itemDTO;
         } catch (FailureToReachDataBaseException e) {
+            logger.log("Exception: " + e.getMessage());
             throw new NetworkFailureException(e.getMessage());
         }
     }
