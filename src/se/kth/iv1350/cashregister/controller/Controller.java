@@ -159,4 +159,8 @@ public class Controller {
     public void addRevenueObserver(RevenueObserver obs){
         revenueObservers.add(obs);
     }
+
+    public String getAccountedSale(int index){
+        return regHandler.getAccountedSale(index).getReceipt(1000);
+    }
 }
