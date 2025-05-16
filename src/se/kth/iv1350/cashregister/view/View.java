@@ -41,7 +41,7 @@ public class View {
             this.revenueView.printRevenue();
             System.out.println("Enter Item-ID (1-20)");
             if (controller.getSale() != null) {
-                System.out.println("Type 'endsale' to end current sale");
+                System.out.println("Type 'endsale' to end current sale \n");
             };
             
             String input = myScanner.next();
