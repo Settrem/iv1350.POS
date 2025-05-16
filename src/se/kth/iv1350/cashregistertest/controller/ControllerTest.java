@@ -6,6 +6,7 @@ import se.kth.iv1350.cashregister.controller.Controller;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.model.Sale;
 import se.kth.iv1350.cashregister.controller.NoItemFoundException;
+import se.kth.iv1350.cashregister.util.*;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,8 @@ public class ControllerTest {
 
     @BeforeEach
     public void setUp() {
-        controller = new Controller();
+        Logger logger = new ConsoleLogger();
+        controller = new Controller(logger);
         controller.startSale();
     }
 
