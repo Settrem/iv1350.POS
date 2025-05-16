@@ -38,6 +38,8 @@ public class View {
      */
     public void userInterface() {
         while (running) {
+            
+            
             this.revenueView.printRevenue();
             System.out.println("Enter Item-ID (1-20)");
             if (controller.getSale() != null) {
@@ -49,7 +51,10 @@ public class View {
             if (input.equalsIgnoreCase("endsale") && controller.getSale() != null) {
                 System.out.println(this.endSale(enterPayment()));
                 
-            } else {
+            } else if(input.equalsIgnoreCase("accountingtest")){
+                String accountingtest = this.controller.getAccountedSale(0);
+                System.out.println(accountingtest);
+            } else{
                 scanItem(input);      
             }
             System.out.println(this.displayCart());
