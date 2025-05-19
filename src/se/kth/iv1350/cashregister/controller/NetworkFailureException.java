@@ -4,8 +4,7 @@ import java.io.IOException;
 
 
 /**
- * Thrown when the system fails find a item,
- * such as when the database server is down.
+ * Thrown when the system fails to reach the database.
  */
 public class NetworkFailureException extends RuntimeException {
 
