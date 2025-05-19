@@ -103,8 +103,9 @@ public class Controller {
      * Otherwise, it records the sale, prints the receipt, and ends the current
      * sale.
      *
-     * @param paidAmount The amount paid by the customer (in öre).
+     * @param paidAmount The amount paid by the customer.
      * @return A message indicating the result of the operation.
+     * @throws InsufficientPaymentException If payment fails.
      */
     public void endSale(int paidAmount) throws InsufficientPaymentException {
         if (!enoughMoney(paidAmount)) {

@@ -12,7 +12,7 @@ public class TotalRevenueFileOutput implements RevenueObserver {
     private static final double ÖRE_TO_SEK = 0.01;
 
     /**
-     * Creates a new instance and starts a fresh file.
+     * Creates a new instance and adds to the current file.
      */
     public TotalRevenueFileOutput() {
         try {
@@ -27,7 +27,7 @@ public class TotalRevenueFileOutput implements RevenueObserver {
     /**
      * Updates revenue and logs the new total.
      *
-     * @param amount The amount of the current sale (in sek).
+     * @param amount The amount of the current sale.
      */
     @Override
     public void updateRevenue(int amount){
