@@ -7,6 +7,7 @@ import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.model.Sale;
 import se.kth.iv1350.cashregister.controller.NoItemFoundException;
 import se.kth.iv1350.cashregister.util.*;
+import se.kth.iv1350.cashregister.util.*;
 
 import java.util.ArrayList;
 
