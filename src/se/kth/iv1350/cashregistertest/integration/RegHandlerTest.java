@@ -14,7 +14,7 @@ public class RegHandlerTest {
 
     @BeforeEach
     public void setUp() {
-        regHandler = new RegHandler();
+        regHandler = new RegHandler("src/lib/svensk_matmeny.csv");
     }
 
     @Test

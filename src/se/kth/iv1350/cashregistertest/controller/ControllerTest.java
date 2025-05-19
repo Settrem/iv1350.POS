@@ -3,7 +3,10 @@ package se.kth.iv1350.cashregistertest.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.kth.iv1350.cashregister.controller.Controller;
+import se.kth.iv1350.cashregister.controller.InsufficientPaymentException;
+import se.kth.iv1350.cashregister.controller.NetworkFailureException;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
+import se.kth.iv1350.cashregister.integration.RegHandler;
 import se.kth.iv1350.cashregister.model.Sale;
 import se.kth.iv1350.cashregister.controller.NoItemFoundException;
 import se.kth.iv1350.cashregister.util.*;
@@ -16,11 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ControllerTest {
     private Controller controller;
+    private RegHandler regHandler = new RegHandler("src/lib/svensk_matmeny.csv");
+    Logger logger = new ConsoleLogger();
 
     @BeforeEach
     public void setUp() {
-        Logger logger = new ConsoleLogger();
-        controller = new Controller(logger);
+        controller = new Controller(logger, regHandler);
         controller.startSale();
     }
 
@@ -28,6 +32,49 @@ public class ControllerTest {
     public void testStartSaleCreatesNewSale() {
         Sale sale = controller.getSale();
         assertNotNull(sale, "Sale should be initialized after startSale()");
+    }
+
+
+    @Test
+    public void testEnterItemThrowsNoItemFoundException() {
+        int invalidItemID = 21; // This ID is not found according to your controller logic
+
+        NoItemFoundException thrown = assertThrows(
+            NoItemFoundException.class,
+            () -> controller.enterItem(invalidItemID),
+            "Expected enterItem() to throw NoItemFoundException for invalid ID"
+        );
+
+        assertTrue(thrown.getMessage().contains("Item with ID " + invalidItemID + " was not found!"));
+    }
+
+    @Test
+    public void testEnterItemThrowsNetworkFailureException() {
+        this.regHandler = new RegHandler("sdsdsds");
+        this.controller = new Controller(logger, regHandler);
+        int randomIremID = 999;
+
+        NetworkFailureException thrown = assertThrows(
+            NetworkFailureException.class,
+            () -> controller.enterItem(randomIremID),
+            "Expected enterItem() to throw NetworkFailureException for DB failure"
+        );
+
+        assertNotNull(thrown.getMessage(), "Exception message should not be null");
+    }
+
+    @Test
+    public void testEndSaleThrowsInsufficientPaymentException() {
+        controller.enterItem(1); // Add item to set a non-zero total
+        int insufficientAmount = 0;
+
+        InsufficientPaymentException thrown = assertThrows(
+            InsufficientPaymentException.class,
+            () -> controller.endSale(insufficientAmount),
+            "Expected endSale() to throw InsufficientPaymentException for low payment"
+        );
+
+        assertTrue(thrown.getMessage().contains("Insufficient payment"));
     }
 
     @Test

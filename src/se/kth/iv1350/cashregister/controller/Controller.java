@@ -39,9 +39,9 @@ public class Controller {
      * By creating {@code Printer} and {@code RegHandler} objects to be able to
      * reach the integration parts of the aplications
      */
-    public Controller(Logger logger) {
+    public Controller(Logger logger, RegHandler regHandler) {
         this.logger = logger;
-        this.regHandler = new RegHandler();
+        this.regHandler = regHandler;
         this.printerMachine = new Printer();
     }
 

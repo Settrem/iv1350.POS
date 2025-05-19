@@ -25,10 +25,10 @@ public class RegHandler {
     * These registries are used to manage external data like item info, discounts,
     * customer details, and to record sales.
     */
-    public RegHandler() {
+    public RegHandler(String itemRegistryFilePath) {
         //this.customerRegistry = new CustomerRegistry();
         //this.discountRegistry = new DiscountRegistry();
-        this.itemRegistry = new ItemRegistry("src/lib/svensk_matmeny.csv");
+        this.itemRegistry = new ItemRegistry(itemRegistryFilePath);
         //this.customerRegistry = new CustomerRegistry();
         this.accountingRegistry = new AccountingRegistry();
     }

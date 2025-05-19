@@ -1,6 +1,7 @@
 package se.kth.iv1350.cashregister.startup;
 
 import se.kth.iv1350.cashregister.controller.Controller;
+import se.kth.iv1350.cashregister.integration.RegHandler;
 import se.kth.iv1350.cashregister.view.View;
 import se.kth.iv1350.cashregister.util.FileLogger;
 import se.kth.iv1350.cashregister.util.Logger;
@@ -17,7 +18,9 @@ public class Main {
      */
     public static void main(String[] args) {
         Logger logger = new FileLogger();
-        Controller controller = new Controller(logger);
+        String itemRegistryFilePath = "src/lib/svensk_matmeny.csv";
+        RegHandler regHandler = new RegHandler(itemRegistryFilePath);
+        Controller controller = new Controller(logger, regHandler);
         controller.addRevenueObserver(new TotalRevenueFileOutput());
         View view = new View(controller);
         view.userInterface();
