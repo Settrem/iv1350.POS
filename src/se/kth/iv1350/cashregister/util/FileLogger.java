@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 
 /**
  * Prints log messages to a file. The log file will be in the
- * current directory and will be called log.txt.
+ * src/lib/log and will be called Exceptionlog.txt.
  */
 public class FileLogger implements Logger{
     private PrintWriter logStream;
@@ -19,13 +19,14 @@ public class FileLogger implements Logger{
     public FileLogger() {
         try {
             logStream = new PrintWriter(
-                new FileWriter("src/log/ExceptionLog.txt"), true);
+                new FileWriter("src/log/ExceptionLog.txt", true), true);
+                logStream.println("Program Start");
         } catch (IOException ioe) {
-            System.out.println("CAN NOT LOG.");
+            System.out.println("CAN NOT OPEN LOG.");
             ioe.printStackTrace();
         }
     }
-
+ 
     /**
      * Prints the specified string to the log file.
      *

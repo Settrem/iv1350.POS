@@ -10,7 +10,8 @@ public class TotalRevenueView implements RevenueObserver{
         this.totalOfSales = 0;
     }
 
-    public void newSale(int amount){
+    @Override
+    public void updateRevenue(int amount){
         this.totalOfSales += amount;
     }
 

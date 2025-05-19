@@ -6,5 +6,5 @@ public interface RevenueObserver {
      * keeps track of how much money has been made throughout the program's runtime
      * @param money the total sum to be added
      */
-    void newSale(int money);
+    void updateRevenue(int money);
 }

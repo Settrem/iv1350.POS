@@ -4,6 +4,7 @@ import se.kth.iv1350.cashregister.controller.Controller;
 import se.kth.iv1350.cashregister.view.View;
 import se.kth.iv1350.cashregister.util.FileLogger;
 import se.kth.iv1350.cashregister.util.Logger;
+import se.kth.iv1350.cashregister.util.TotalRevenueFileOutput;
 
 /**
  * Starts the entire system, the main method creates the POS
@@ -17,6 +18,7 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = new FileLogger();
         Controller controller = new Controller(logger);
+        controller.addRevenueObserver(new TotalRevenueFileOutput());
         View view = new View(controller);
         view.userInterface();
     }

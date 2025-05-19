@@ -10,6 +10,7 @@ import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.integration.FailureToReachDataBaseException;
 import se.kth.iv1350.cashregister.integration.Printer;
 import se.kth.iv1350.cashregister.util.*;
+import se.kth.iv1350.cashregister.view.TotalRevenueView;
 
 /**
  * The <code>Controller</code> class acts as the intermediary between the view
@@ -31,7 +32,6 @@ public class Controller {
     private final Logger logger;
 
     private ArrayList<RevenueObserver> revenueObservers = new ArrayList<>();
-    
 
     /**
      * Initializes the entire model of the system that controls the entire sale
@@ -62,7 +62,7 @@ public class Controller {
      *
      * @param itemID The identification number of the item.
      * @return The corresponding {@code ItemDTO}.
-     * @throws NoItemFoundException if itemID isn't found
+     * @throws NoItemFoundException    if itemID isn't found
      * @throws NetworkFailureException if enterItem fails to connect to database
      */
     public ItemDTO enterItem(int itemID) throws NoItemFoundException, NetworkFailureException {
@@ -73,11 +73,11 @@ public class Controller {
                 logger.log("Exception: " + e.getMessage());
                 throw e;
             }
-    
+
             if (this.currentSale == null) {
                 this.startSale();
             }
-    
+
             currentSale.addItem(itemDTO);
             return itemDTO;
         } catch (FailureToReachDataBaseException e) {
@@ -100,7 +100,8 @@ public class Controller {
      * Finalizes the current sale by processing payment and generating a receipt.
      * 
      * If the paid amount is insufficient, it returns an error message.
-     * Otherwise, it records the sale, prints the receipt, and ends the current sale.
+     * Otherwise, it records the sale, prints the receipt, and ends the current
+     * sale.
      *
      * @param paidAmount The amount paid by the customer (in öre).
      * @return A message indicating the result of the operation.
@@ -110,7 +111,7 @@ public class Controller {
         String receipt = printReceipt(paidAmount);
         this.printerMachine.printSale(receipt);
         this.notifyObservers();
-        
+
         currentSale = null;
     }
 
@@ -120,11 +121,12 @@ public class Controller {
      * @return whether or not the amount was enough
      */
     public boolean enoughMoney(int paidAmount) {
-        return(paidAmount < currentSale.getTotal());
+        return (paidAmount < currentSale.getTotal());
     }
 
     /**
      * enters the current sale into the accounting registry.
+     * 
      * @return the result of the operation, 0 if concluded
      */
     public boolean accountSale() {
@@ -152,15 +154,15 @@ public class Controller {
         return currentSale.getReceipt(cash);
     }
 
-    private void notifyObservers(){
-        revenueObservers.forEach(RevenueObserver -> RevenueObserver.newSale(currentSale.getTotal()));
+    private void notifyObservers() {
+        revenueObservers.forEach(RevenueObserver -> RevenueObserver.updateRevenue(currentSale.getTotal()));
     }
 
-    public void addRevenueObserver(RevenueObserver obs){
+    public void addRevenueObserver(RevenueObserver obs) {
         revenueObservers.add(obs);
     }
 
-    public String getAccountedSale(int index){
+    public String getAccountedSale(int index) {
         return regHandler.getAccountedSale(index).getReceipt(1000);
     }
 }
