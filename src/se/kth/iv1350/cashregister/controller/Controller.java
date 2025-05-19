@@ -10,7 +10,6 @@ import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.integration.FailureToReachDataBaseException;
 import se.kth.iv1350.cashregister.integration.Printer;
 import se.kth.iv1350.cashregister.util.*;
-import se.kth.iv1350.cashregister.view.TotalRevenueView;
 
 /**
  * The <code>Controller</code> class acts as the intermediary between the view
@@ -30,6 +29,7 @@ public class Controller {
     private RegHandler regHandler;
     private Printer printerMachine;
     private final Logger logger;
+    private static final double ÖRE_TO_SEK = 0.01;
 
     private ArrayList<RevenueObserver> revenueObservers = new ArrayList<>();
 
@@ -106,7 +106,14 @@ public class Controller {
      * @param paidAmount The amount paid by the customer (in öre).
      * @return A message indicating the result of the operation.
      */
-    public void endSale(int paidAmount) {
+    public void endSale(int paidAmount) throws InsufficientPaymentException {
+        if (!enoughMoney(paidAmount)) {
+            InsufficientPaymentException e = new InsufficientPaymentException(
+                    "Insufficient payment: paid " + paidAmount * ÖRE_TO_SEK +
+                            ", total is: " + currentSale.getTotal() * ÖRE_TO_SEK);
+            logger.log("Exception: " + e.getMessage());
+            throw e;
+        }
 
         String receipt = printReceipt(paidAmount);
         this.printerMachine.printSale(receipt);
@@ -121,7 +128,7 @@ public class Controller {
      * @return whether or not the amount was enough
      */
     public boolean enoughMoney(int paidAmount) {
-        return (paidAmount < currentSale.getTotal());
+        return (paidAmount >= currentSale.getTotal());
     }
 
     /**

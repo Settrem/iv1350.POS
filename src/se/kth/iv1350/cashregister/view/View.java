@@ -3,6 +3,7 @@ package se.kth.iv1350.cashregister.view;
 import java.util.ArrayList;
 import java.util.Scanner;
 import se.kth.iv1350.cashregister.controller.Controller;
+import se.kth.iv1350.cashregister.controller.InsufficientPaymentException;
 import se.kth.iv1350.cashregister.model.CartItem;
 import se.kth.iv1350.cashregister.util.TotalRevenueFileOutput;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
@@ -136,19 +137,14 @@ public class View {
      * @return A message indicating the result of the operation.
      */
     private String endSale(int paidAmount) {
-
-        if (controller.enoughMoney(paidAmount)) {
-            return ("Customer did not provide enough cash, please try again.");
-        }
-
-        if (!controller.accountSale()) {
-            return ("Error occured while accounting sale!");
-        }
-
-        controller.printReceipt(paidAmount);
+    try {
         controller.endSale(paidAmount);
-        return ("Sale ended successfully!");
+        return "Sale ended successfully!";
+    } catch (InsufficientPaymentException e) {
+        return e.getMessage();
     }
+}
+
 
     /**
      * Ends the current sale by prompting the user to enter a payment amount.
