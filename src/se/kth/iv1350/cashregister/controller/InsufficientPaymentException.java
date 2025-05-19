@@ -4,17 +4,16 @@ import java.io.IOException;
 
 
 /**
- * Thrown when the system fails find a item,
- * such as when the item entered is not valid.
+ * Thrown when not enough cash is provided to end current sale.
  */
-public class NoItemFoundException extends RuntimeException {
+public class InsufficientPaymentException extends RuntimeException {
 
     /**
      * Creates a new instance with a specified message.
      *
      * @param message The detail message describing what went wrong.
      */
-    public NoItemFoundException(String message) {
+    public InsufficientPaymentException(String message) {
         super(message);
     }
 
