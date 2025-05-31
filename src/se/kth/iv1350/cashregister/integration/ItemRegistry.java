@@ -55,7 +55,11 @@ public class ItemRegistry {
      * @throws FailureToReachDateBaseException if getItemById fails to connect to database
      */
     public ItemDTO getItemById(int itemID) throws FailureToReachDataBaseException {
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+        String currentFilepath = filepath;
+        if (itemID == 0){
+            currentFilepath = "nonexistent file";
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(currentFilepath))) {
             String line;
             br.readLine(); 
 
