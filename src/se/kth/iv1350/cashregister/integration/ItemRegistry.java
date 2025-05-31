@@ -4,22 +4,26 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import se.kth.iv1350.cashregister.controller.NoItemFoundException;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 
-
 /**
- * The {@code ItemRegistry} class handles access to item data stored in a CSV file.
+ * The {@code ItemRegistry} class handles access to item data stored in a CSV
+ * file.
  * 
- * It reads item information from a file and provides methods to find and return items
+ * It reads item information from a file and provides methods to find and return
+ * items
  * based on their ID. This class is part of the integration layer and acts as a
  * simulated item database for the system.
  */
 public class ItemRegistry {
-    //This is the filepath to the CSV file that will be used as the ItemRegistry
+    // This is the filepath to the CSV file that will be used as the ItemRegistry
     String filepath;
-    
+
     /**
-     * Constructor that sets the source were the itemregistry receives item info from
+     * Constructor that sets the source were the itemregistry receives item info
+     * from
+     * 
      * @param filepath is the file path och the item file
      */
     public ItemRegistry(String filepath) {
@@ -27,14 +31,16 @@ public class ItemRegistry {
     }
 
     /**
-     * Creates a {@code ItemDTO} by disecting a String that hold the items information 
+     * Creates a {@code ItemDTO} by disecting a String that hold the items
+     * information
+     * 
      * @param line contains the item information in one string
      * 
      * @return the itemDTO created from the the parameter String
      */
     private ItemDTO parseCSVLine(String line) {
         String[] parts = line.split(",", 5);
-        
+
         int itemID = Integer.parseInt(parts[0]);
         String name = parts[1];
         String description = parts[2];
@@ -54,24 +60,28 @@ public class ItemRegistry {
      * @return The {@code ItemDTO} if found, or {@code null} if not found or an error happens.
      * @throws FailureToReachDateBaseException if getItemById fails to connect to database
      */
-    public ItemDTO getItemById(int itemID) throws FailureToReachDataBaseException {
-        String currentFilepath = filepath;
-        if (itemID == 0){
-            currentFilepath = "nonexistent file";
-        }
-        try (BufferedReader br = new BufferedReader(new FileReader(currentFilepath))) {
-            String line;
-            br.readLine(); 
+    public ItemDTO getItemById(int itemID) throws FailureToReachDataBaseException, NoItemFoundException {
+    String currentFilepath = filepath;
 
-            while ((line = br.readLine()) != null) {
-                ItemDTO item = parseCSVLine(line);
-                if (item.getItemID() == itemID) {
-                    return item;
-                }           
+    if (itemID == 0) {
+        currentFilepath = "nonexistent file";
+    }
+
+    try (BufferedReader br = new BufferedReader(new FileReader(currentFilepath))) {
+        String line;
+        br.readLine();
+
+        while ((line = br.readLine()) != null) {
+            ItemDTO item = parseCSVLine(line);
+            if (item.getItemID() == itemID) {
+                return item;
             }
-        } catch (IOException e) {
-            throw new FailureToReachDataBaseException("Failed to reach item registry!");
         }
-        return null; 
+
+        throw new NoItemFoundException("Item with ID " + itemID + " was not found!");
+
+    } catch (IOException e) {
+        throw new FailureToReachDataBaseException("Failed to reach item registry!");
+        }
     }
 }

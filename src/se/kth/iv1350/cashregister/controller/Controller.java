@@ -66,25 +66,25 @@ public class Controller {
      * @throws NetworkFailureException if enterItem fails to connect to database
      */
     public ItemDTO enterItem(int itemID) throws NoItemFoundException, NetworkFailureException {
-        try {
-            ItemDTO itemDTO = this.regHandler.getItem(itemID);
-            if (itemDTO == null) {
-                NoItemFoundException e = new NoItemFoundException("Item with ID " + itemID + " was not found!");
-                logger.log("Exception: " + e.getMessage());
-                throw e;
-            }
+    try {
+        ItemDTO itemDTO = this.regHandler.getItem(itemID);
 
-            if (this.currentSale == null) {
-                this.startSale();
-            }
-
-            currentSale.addItem(itemDTO);
-            return itemDTO;
-        } catch (FailureToReachDataBaseException e) {
-            logger.log("Exception: " + e.getMessage());
-            throw new NetworkFailureException(e.getMessage());
+        if (this.currentSale == null) {
+            this.startSale();
         }
+
+        currentSale.addItem(itemDTO);
+        return itemDTO;
+
+    } catch (NoItemFoundException e) {
+        logger.log("Exception: " + e.getMessage());
+        throw e;
+
+    } catch (FailureToReachDataBaseException e) {
+        logger.log("Exception: " + e.getMessage());
+        throw new NetworkFailureException(e.getMessage());
     }
+}
 
     /**
      * Gets the current sale information from the
@@ -162,10 +162,22 @@ public class Controller {
         return currentSale.getReceipt(cash);
     }
 
+    /**
+     * 
+     * Notifies all registered revenue observers about the revenue
+     * generated from the current sale by passing the total sale amount.
+     */
     private void notifyObservers() {
         revenueObservers.forEach(RevenueObserver -> RevenueObserver.updateRevenue(currentSale.getTotal()));
     }
 
+    /**
+     * 
+     * Adds a revenue observer to the list of observers that should be notified
+     * whenever a sale is completed.*
+     * 
+     * @param obs The revenue observer to be added.
+     **/
     public void addRevenueObserver(RevenueObserver obs) {
         revenueObservers.add(obs);
     }
