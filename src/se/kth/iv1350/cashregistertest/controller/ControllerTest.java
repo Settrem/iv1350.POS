@@ -34,16 +34,14 @@ public class ControllerTest {
         assertNotNull(sale, "Sale should be initialized after startSale()");
     }
 
-
     @Test
     public void testEnterItemThrowsNoItemFoundException() {
         int invalidItemID = 21; // This ID is not found according to your controller logic
 
         NoItemFoundException thrown = assertThrows(
-            NoItemFoundException.class,
-            () -> controller.enterItem(invalidItemID),
-            "Expected enterItem() to throw NoItemFoundException for invalid ID"
-        );
+                NoItemFoundException.class,
+                () -> controller.enterItem(invalidItemID),
+                "Expected enterItem() to throw NoItemFoundException for invalid ID");
 
         assertTrue(thrown.getMessage().contains("Item with ID " + invalidItemID + " was not found!"));
     }
@@ -55,51 +53,45 @@ public class ControllerTest {
         int randomIremID = 999;
 
         NetworkFailureException thrown = assertThrows(
-            NetworkFailureException.class,
-            () -> controller.enterItem(randomIremID),
-            "Expected enterItem() to throw NetworkFailureException for DB failure"
-        );
+                NetworkFailureException.class,
+                () -> controller.enterItem(randomIremID),
+                "Expected enterItem() to throw NetworkFailureException for DB failure");
 
         assertNotNull(thrown.getMessage(), "Exception message should not be null");
     }
 
     @Test
-    public void testEndSaleThrowsInsufficientPaymentException() {
+    public void testEndSaleThrowsInsufficientPaymentException() throws NoItemFoundException{
         controller.enterItem(1); // Add item to set a non-zero total
         int insufficientAmount = 0;
 
         InsufficientPaymentException thrown = assertThrows(
-            InsufficientPaymentException.class,
-            () -> controller.endSale(insufficientAmount),
-            "Expected endSale() to throw InsufficientPaymentException for low payment"
-        );
+                InsufficientPaymentException.class,
+                () -> controller.endSale(insufficientAmount),
+                "Expected endSale() to throw InsufficientPaymentException for low payment");
 
         assertTrue(thrown.getMessage().contains("Insufficient payment"));
     }
 
     @Test
-    public void testEnterValidItem() {
-        ItemDTO item = null;
-        try {
-        item = controller.enterItem(1);
-        } catch (NoItemFoundException e) {
+    public void testEnterValidItem() throws NoItemFoundException {
+        ItemDTO item = controller.enterItem(1);
         assertNotNull(item, "ItemDTO should not be null for valid ID");
         assertEquals(1, item.getItemID(), "Item ID should be 1");
-        }
     }
 
     @Test
     public void testEnterInvalidItem() {
         ItemDTO item = null;
         try {
-        item = controller.enterItem(21);
+            item = controller.enterItem(21);
         } catch (NoItemFoundException e) {
             assertNull(item, "ItemDTO should be null for invalid ID");
         }
     }
 
     @Test
-    public void testGetCartAfterAddingItems() {
+    public void testGetCartAfterAddingItems() throws NoItemFoundException {
         controller.enterItem(1);
         controller.enterItem(2);
         ArrayList<?> cart = controller.getCart();
@@ -107,18 +99,17 @@ public class ControllerTest {
     }
 
     @Test
-    public void testEndSaleClearsCurrentSale() {
+    public void testEndSaleClearsCurrentSale() throws NoItemFoundException, InsufficientPaymentException{
         controller.enterItem(1);
         controller.endSale(100000);
         assertNull(controller.getSale(), "Sale should be null after ending it");
     }
 
     @Test
-    public void testPrintReceiptReturnsString() {
+    public void testPrintReceiptReturnsString() throws NoItemFoundException {
         controller.enterItem(1);
         String receipt = controller.printReceipt(100);
         assertNotNull(receipt, "Receipt should not be null");
         assertTrue(receipt.contains("Total"), "Receipt should contain 'Total'");
     }
 }
-

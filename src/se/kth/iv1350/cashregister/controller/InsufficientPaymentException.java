@@ -6,7 +6,7 @@ import java.io.IOException;
 /**
  * Thrown when not enough cash is provided to end current sale.
  */
-public class InsufficientPaymentException extends RuntimeException {
+public class InsufficientPaymentException extends Exception {
 
     /**
      * Creates a new instance with a specified message.
