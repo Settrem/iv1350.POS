@@ -2,6 +2,8 @@ package se.kth.iv1350.cashregistertest.integration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import se.kth.iv1350.cashregister.controller.NoItemFoundException;
 import se.kth.iv1350.cashregister.dto.ItemDTO;
 import se.kth.iv1350.cashregister.integration.ItemRegistry;
 import se.kth.iv1350.cashregister.integration.FailureToReachDataBaseException;
@@ -32,7 +34,9 @@ public class ItemRegistryTest {
             assertEquals(12, item.getVAT());
         } catch (FailureToReachDataBaseException e) {
             fail("Exception should not have been thrown: " + e.getMessage());
-        }
+        } catch (NoItemFoundException e) {
+            fail("Exception should not have been thrown: " + e.getMessage());
+        } 
     }
 
     @Test
@@ -42,7 +46,9 @@ public class ItemRegistryTest {
         try {
             item = itemRegistry.getItemById(invalidItemID);
         } catch (FailureToReachDataBaseException e) {
-            assertNull(item, "Should return null for nonexistent item ID");
+            assertNull(item, "Should throw Exception for failure to reach item database");
+        } catch (NoItemFoundException e) {
+            assertNull(item, "Should throw exception null for nonexistent item ID");
         }
     }
 
@@ -53,7 +59,9 @@ public class ItemRegistryTest {
             ItemRegistry brokenRegistry = new ItemRegistry("invalid/path.csv");
             item = brokenRegistry.getItemById(1);
         } catch (FailureToReachDataBaseException e) {
-            assertNull(item, "Should return null if file cannot be read");
+            assertNull(item, "Should throw Exception if file cannot be read");
+        } catch (NoItemFoundException e) {
+            assertNull(item, "Throw Exception for nonexistent item ID");
         }
     }
 }

@@ -9,6 +9,13 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "se.kth.iv1350.cashregister.startup.Main",
+            "projectName": "iv1350.POS_c2321059"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "se.kth.iv1350.cashregister.startup.Main",
             "projectName": "iv1350.POS_c5f3ec95"
         },
         {

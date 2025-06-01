@@ -1,12 +1,5 @@
 Program Start
-Exception: Item with ID 66 was not found!
-Program Start
-Program Start
-Exception: Item with ID 66 was not found!
-Program Start
-Program Start
 Exception: Failed to reach item registry!
+Exception: Item with ID 21 was not found!
+Exception: Insufficient payment: paid 20.0, total is: 123.2
 Program Start
-Exception: Failed to reach item registry!
-Program Start
-Exception: Failed to reach item registry!
